@@ -2,34 +2,77 @@
 {% block title %}¿Quiénes somos?{% endblock %}
 
 {% block content %}
-<h1>¿Quiénes somos?</h1>
+<h1 class="text-center">Sobre nosotros</h1>
 
-<h3>Misión</h3>
-<p>
-    Representar a los integradores de TIC’s generando relaciones y oportunidades
-    de crecimiento, impulsando el desarrollo tecnológico de la sociedad.
-</p>
+<div class="row g-4">
 
-<h3>Visión</h3>
-<p>
-    Ser referentes en la integración de soluciones tecnológicas, reconocidos
-    por la sociedad, la industria y el gobierno.
-</p>
+    <div class="col-lg-4 col-md-6">
+        <div class="card card-fixed shadow-sm h-100">
 
+            <img src="{{ url_for('static', filename='images/card1.jpg') }}" class="card-img-top card-img-fixed"
+                alt="...">
+
+            <div class="card-body">
+                <h5 class="card-title">Nosotros</h5>
+                <p class="card-text">
+                    Somos una agrupación de empresas y profesionales, enfocados al desarrollo e implementación de
+                    soluciones tecnológicas avanzadas, en el occidente del país, con sede en la ciudad de Guadalajara,
+                    Jalisco, orientados a fortalecer a sus socios integrantes, mediante la representatividad unificada,
+                    la conformación de redes de negocio y la actualización, vinculándonos tanto con la academia como con
+                    el gobierno, ofreciendo con todo lo anterior un canal adecuado y
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="col-lg-4 col-md-6">
+        <div class="card card-fixed shadow-sm h-100">
+
+            <img src="{{ url_for('static', filename='images/card2.jpg') }}" class="card-img-top card-img-fixed"
+                alt="...">
+
+            <div class="card-body">
+                <h5 class="card-title">Misión</h5>
+                <p class="card-text">
+                    Representar a los integradores de TIC´s de Jalisco, generando relaciones y oportunidades de
+                    crecimiento. Fomentar el compromiso con el desarrollo de la sociedad a taves de la implentacion de
+                    la tecnologia impulsando el crecimiento de las capacidades y su aprovechamiento en beneficio de la
+                    sociedad y sus integrantes.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+        <div class="card card-fixed shadow-sm h-100">
+
+            <img src="{{ url_for('static', filename='images/card3.jpg') }}" class="card-img-top card-img-fixed"
+                alt="...">
+
+            <div class="card-body">
+                <h5 class="card-title">Visión</h5>
+                <p class="card-text">
+                    Ser referente en la integracion de Soluciones Tecnologicas, reconocido por la sociedad, industria y
+                    gobierno.
+                </p>
+            </div>
+
+        </div>
+    </div>
 <hr>
-
-<h2>Contáctanos</h2>
-
-<form>
-    <label>Nombre</label><br>
-    <input type="text"><br><br>
-
-    <label>Email</label><br>
-    <input type="email"><br><br>
-
-    <label>Mensaje</label><br>
-    <textarea></textarea><br><br>
-
-    <button type="submit" disabled>Enviar (próximamente)</button>
+</div>
+<form action="" class="card shadow-sm p-4">
+    <h1 class="h4 mb-3 text-center">Contáctanos</h1>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Email</label>
+  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="alguien@ejemplo.com">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
 </form>
 {% endblock %}

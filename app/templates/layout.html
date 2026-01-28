@@ -8,13 +8,13 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <meta charset="UTF-8">
-    <title>{% block title %}Mi App Flask{% endblock %}</title>
+    <title>{% block title %}Cluster Integradores de Alta Tecnología{% endblock %}</title>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container container-lg">
             <a class="navbar-brand" href="/">CiatMX</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -22,26 +22,32 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">Acerca de</a>
+                        <a class="nav-link" href="/about">¿Quiénes somos?</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/gallery">Galeria</a>
-                    </li>
-                    {% if current_user.is_authenticated %}
 
-                    {% if current_user.role == "admin" %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gallery">Galería</a>
+                    </li>
+
+                    {% if current_user.is_authenticated and current_user.role == "admin" %}
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/gallery">Admin Galeria</a>
                     </li>
                     {% endif %}
+                </ul>
+
+        
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if current_user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Salir</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link" href="/login">Iniciar sesión</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/register">Registro</a>
@@ -52,7 +58,10 @@
         </div>
     </nav>
 
-    {% block content %}{% endblock %}
+
+    <main class="container container-lg my-4">
+        {% block content %}{% endblock %}
+    </main>
 
 </body>
 
