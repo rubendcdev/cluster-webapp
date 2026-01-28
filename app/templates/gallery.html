@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Galería{% endblock %}
+
+{% block content %}
+<h1>Galería</h1>
+
+{% if images %}
+    {% for img in images %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+            <img src="{{ url_for('static', filename='images/' + img.image) }}" width="200">
+            <h3>{{ img.title }}</h3>
+            <p>{{ img.description }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>No hay imágenes aún.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Admin Galería{% endblock %}
+
+{% block content %}
+<h1>Administrar Galería</h1>
+
+<p>Solo visible para administradores.</p>
+
+<h2>Agregar imagen</h2>
+
+<form method="POST">
+    <label>Título</label><br>
+    <input type="text"><br><br>
+
+    <label>Descripción</label><br>
+    <textarea></textarea><br><br>
+
+    <label>Imagen (ruta por ahora)</label><br>
+    <input type="text"><br><br>
+
+    <button type="submit" disabled>Guardar (pendiente)</button>
+</form>
+
+<hr>
+
+<h2>Listado de imágenes</h2>
+<p>(Aquí irá el listado con editar / eliminar)</p>
+{% endblock %}
