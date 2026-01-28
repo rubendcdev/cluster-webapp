@@ -5,28 +5,29 @@
 <div class="row justify-content-center">
   <div class="col-lg-4 col-md-6">
 
-    <form method="post" class="card shadow-sm p-4">
+    <form method="post" action="{{ url_for('auth.register') }}" class="card shadow-sm p-4">
       <h1 class="h4 mb-3 text-center">Crear una cuenta</h1>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-danger">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      
       <div class="mb-3">
-        <label class="form-label">Nombre</label>
-        <input type="text" class="form-control">
+        <label for="username" class="form-label">Nombre de usuario</label>
+        <input type="text" class="form-control" id="username" name="username" required>
       </div>
+      
       <div class="mb-3">
-        <label class="form-label">Apellidos</label>
-        <input type="text" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Teléfono</label>
-        <input type="number" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-control">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email" required>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Contraseña</label>
-        <input type="password" class="form-control">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" required>
       </div>
 
       <button type="submit" class="btn btn-success w-100">
