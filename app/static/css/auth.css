@@ -1,0 +1,125 @@
+/* =========================
+   AUTH (LOGIN / REGISTER)
+   ========================= */
+
+:root {
+  --primary: #244D8F;
+  --primary-dark: #1e4179;
+  --text-dark: #1f2933;
+  --text-muted: #6b7280;
+  --bg-light: #f4f6f9;
+  --border-light: #e5e7eb;
+}
+
+body {
+  background-color: var(--bg-light);
+}
+
+/* Card */
+.auth-card {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.12);
+  overflow: hidden;
+}
+
+/* Left panel */
+.auth-hero {
+  background: url("/static/images/slide3.jpg") center / cover no-repeat;
+  color: #ffffff;
+  padding: 48px 36px;
+}
+
+
+.auth-hero h1 {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.auth-hero p {
+  font-size: 15px;
+  opacity: .9;
+}
+
+/* Form */
+.auth-form {
+  padding: 40px;
+}
+
+.auth-form h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 24px;
+}
+
+/* Inputs */
+.form-underline .form-control {
+  border: none;
+  border-bottom: 2px solid var(--border-light);
+  border-radius: 0;
+  padding-left: 0;
+}
+
+.form-underline .form-control:focus {
+  box-shadow: none;
+  border-bottom-color: var(--primary);
+}
+
+/* Buttons */
+.btn-primary-auth {
+  background-color: var(--primary);
+  border: none;
+  color: #fff;
+}
+
+.btn-primary-auth:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Google button */
+.btn-google {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #1f2933;
+  font-weight: 500;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-google:hover {
+  background: #f9fafb;
+}
+
+
+.btn-google img {
+  width: 18px;
+  margin-right: 8px;
+}
+
+/* Links */
+.link-auth {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.link-auth:hover {
+  text-decoration: underline;
+}
+
+/* Toggle panels */
+.switchable .panel-register {
+  display: none;
+}
+
+.mode-register .panel-login {
+  display: none;
+}
+
+.mode-register .panel-register {
+  display: block;
+}
