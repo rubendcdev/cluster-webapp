@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block title %}¿Quiénes somos?{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
 {% block content %}
 <h1 class="text-center">Sobre nosotros</h1>
 
