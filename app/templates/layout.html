@@ -4,6 +4,8 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
@@ -64,10 +66,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-5" style="background-color: #2c3e50; color: #ffffff; position: relative; overflow: hidden;">
+    <footer class="footer mt-auto py-5">
         <!-- Elemento decorativo triangular de fondo -->
         <div class="position-absolute top-0 end-0 w-50 h-100 opacity-5">
-            <div style="width: 300px; height: 300px; background: linear-gradient(45deg, transparent 50%, #3498db 50%); transform: translate(50%, -50%);"></div>
+            <div class="footer-triangular-decoration"></div>
         </div>
         
         <div class="container container-lg position-relative">
@@ -76,12 +78,12 @@
                 <div class="col-md-4">
                     <div class="mb-4">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-info me-3" style="width: 50px; height: 50px;">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-info me-3 footer-logo-circle">
                                 <i class="bi bi-cpu text-white fs-4"></i>
                             </div>
                             <h3 class="mb-0 fw-bold text-white">CIAT</h3>
                         </div>
-                        <hr class="my-3" style="border-color: #7f8c8d;">
+                        <hr class="my-3 footer-divider">
                     </div>
                     <div class="contact-info">
                         <div class="mb-3 d-flex align-items-start">
@@ -107,7 +109,7 @@
                         <li class="mb-3"><a href="/gallery" class="text-light text-decoration-none">Proyectos</a></li>
                         <li class="mb-3"><a href="#" class="text-light text-decoration-none">Contacto</a></li>
                     </ul>
-                    <hr class="my-3" style="border-color: #7f8c8d;">
+                    <hr class="my-3 footer-divider">
                     <p class="text-light mb-0 small">
                         &copy; 2026 CLUSTER, Inc. • 
                         <a href="#" class="text-light text-decoration-none">Privacy</a> • 
