@@ -1,6 +1,6 @@
 # app/controllers/auth_controller.py
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.security import check_password_hash
 from sqlalchemy.exc import IntegrityError
 from app.models.user import User
@@ -87,3 +87,10 @@ def logout():
     logout_user()
     flash("Has salido de tu sesión.", "success")
     return redirect(url_for("public.index"))
+
+@login_required
+@auth.route("/profile")
+def profile():
+    user = current_user
+    return render_template("profile.html", user=user)
+
