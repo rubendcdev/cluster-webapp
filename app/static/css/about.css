@@ -23,7 +23,7 @@
 
 /* Contenedor principal */
 .container-lg {
-    max-width: 1200px;
+    max-width: 1400px;
 }
 
 /* Título principal */
@@ -96,7 +96,7 @@
 }
 
 /* Cuerpo de la tarjeta - Overlay */
-.card-body {
+.card-fixed .card-body {
     padding: 2rem 2rem 2rem 2rem;
     background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
     position: absolute;
@@ -114,12 +114,12 @@
     padding-top: 3rem;
 }
 
-.card:hover .card-body {
+.card-fixed:hover .card-body {
     opacity: 1;
     transform: translateY(0);
 }
 
-.card-title {
+.card-fixed .card-title {
     font-size: 1.6rem;
     font-weight: 700;
     color: #ffffff;
@@ -131,12 +131,12 @@
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
 }
 
-.card:hover .card-title {
+.card-fixed:hover .card-title {
     transform: translateY(0);
     opacity: 1;
 }
 
-.card-title::after {
+.card-fixed .card-title::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -148,11 +148,11 @@
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
 }
 
-.card:hover .card-title::after {
+.card-fixed:hover .card-title::after {
     width: 60px;
 }
 
-.card-text {
+.card-fixed .card-text {
     color: rgba(255,255,255,0.9);
     line-height: 1.6;
     font-size: 0.95rem;
@@ -161,7 +161,7 @@
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
 }
 
-.card:hover .card-text {
+.card-fixed:hover .card-text {
     transform: translateY(0);
     opacity: 1;
 }
