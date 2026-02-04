@@ -4,9 +4,13 @@ from app.extensions import db, login_manager
 from app.controllers import (
     public_controller,
     auth_controller,
-    admin_gallery_controller
+    admin_gallery_controller,
+    asociaciones_controller,
+    cursos_controller
 )
 from app.models.user import User
+from app.models.asociacion import Asociacion
+from app.models.curso import Curso
 
 app = Flask(
     __name__,
@@ -26,6 +30,8 @@ def load_user(user_id):
 app.register_blueprint(public_controller.public)
 app.register_blueprint(auth_controller.auth)
 app.register_blueprint(admin_gallery_controller.admin_gallery)
+app.register_blueprint(asociaciones_controller.asociaciones)
+app.register_blueprint(cursos_controller.cursos)
 
 if __name__ == "__main__":
     with app.app_context():

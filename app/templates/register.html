@@ -5,7 +5,20 @@
 <div class="row justify-content-center">
   <div class="col-lg-4 col-md-6">
 
-    <form method="post" action="{{ url_for('auth.register') }}" class="card shadow-sm p-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-3">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" class="card shadow-sm p-4" novalidate>
       <h1 class="h4 mb-3 text-center">Crear una cuenta</h1>
       {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -16,22 +29,43 @@
       {% endwith %}
       
       <div class="mb-3">
-        <label for="username" class="form-label">Nombre de usuario</label>
-        <input type="text" class="form-control" id="username" name="username" required>
+        <label class="form-label" for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre" minlength="2" required>
       </div>
       
       <div class="mb-3">
-        <label for="email" class="form-label">Correo electrónico</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+        <label class="form-label" for="apellido_paterno">Apellido paterno</label>
+        <input id="apellido_paterno" name="apellido_paterno" type="text" class="form-control" placeholder="Apellido paterno" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="apellido_materno">Apellido materno (opcional)</label>
+        <input id="apellido_materno" name="apellido_materno" type="text" class="form-control" placeholder="Apellido materno">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="telefono">Teléfono (opcional)</label>
+        <input id="telefono" name="telefono" type="tel" class="form-control" placeholder="555-123-4567">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="correo">Correo</label>
+        <input id="correo" name="correo" type="email" class="form-control" placeholder="tu@correo.com" required>
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" id="password" name="password" required>
+        <label class="form-label" for="password">Contraseña</label>
+        <input id="password" name="password" type="password" class="form-control" placeholder="••••••••" minlength="6" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="confirm_password">Confirmar contraseña</label>
+        <input id="confirm_password" name="confirm_password" type="password" class="form-control" placeholder="••••••••" minlength="6" required>
+      </div>
+
+      <div class="text-end mb-3">
+        <a href="/login" class="small">¿Ya tienes cuenta? Inicia sesión</a>
       </div>
 
       <button type="submit" class="btn btn-success w-100">
-        Ingresar
+        Registrarme
       </button>
     </form>
 

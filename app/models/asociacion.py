@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
-from database import Base 
+from app.extensions import db
 
-class Asociacion(Base):
+class Asociacion(db.Model):
     __tablename__ = "asociaciones"
 
     idAsociaciones = Column(Integer, primary_key=True, index=True)
@@ -9,3 +9,4 @@ class Asociacion(Base):
     url_imagen = Column(String(255))
     descripcion = Column(String(255))
     link = Column(String(255))
+    tipo = Column(String(20), default='Empresarial') # 'Empresarial' or 'Academica'
