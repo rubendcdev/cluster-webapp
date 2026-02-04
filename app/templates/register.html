@@ -20,10 +20,19 @@
 
     <form method="post" class="card shadow-sm p-4" novalidate>
       <h1 class="h4 mb-3 text-center">Crear una cuenta</h1>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-danger">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      
       <div class="mb-3">
         <label class="form-label" for="nombre">Nombre</label>
         <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre" minlength="2" required>
       </div>
+      
       <div class="mb-3">
         <label class="form-label" for="apellido_paterno">Apellido paterno</label>
         <input id="apellido_paterno" name="apellido_paterno" type="text" class="form-control" placeholder="Apellido paterno" required>

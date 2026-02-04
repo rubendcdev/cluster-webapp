@@ -3,4 +3,6 @@ venv/
 __pycache__/
 *.pyc
 database.db
+uploads/
+migrations/
 app/static/uploads/videos/
