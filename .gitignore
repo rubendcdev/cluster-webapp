@@ -5,3 +5,4 @@ __pycache__/
 database.db
 uploads/
 migrations/
+app/static/uploads/videos/

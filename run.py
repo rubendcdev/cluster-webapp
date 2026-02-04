@@ -7,6 +7,11 @@ from app.controllers import (
     admin_gallery_controller,
     asociaciones_controller,
     cursos_controller
+    success_cases_controller,
+    admin_success_cases_controller,
+    stay_application_controller,
+    admin_site_config_controller,
+    super_admin_controller
 )
 from app.models.user import User
 from app.models.asociacion import Asociacion
@@ -32,6 +37,11 @@ app.register_blueprint(auth_controller.auth)
 app.register_blueprint(admin_gallery_controller.admin_gallery)
 app.register_blueprint(asociaciones_controller.asociaciones)
 app.register_blueprint(cursos_controller.cursos)
+app.register_blueprint(success_cases_controller.success_cases)
+app.register_blueprint(admin_success_cases_controller.admin_success)
+app.register_blueprint(stay_application_controller.stay_app)
+app.register_blueprint(admin_site_config_controller.admin_site_config)
+app.register_blueprint(super_admin_controller.super_admin)
 
 if __name__ == "__main__":
     with app.app_context():
