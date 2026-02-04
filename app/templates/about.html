@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block title %}¿Quiénes somos?{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
 {% block content %}
 <h1 class="text-center">Sobre nosotros</h1>
 
@@ -64,15 +68,42 @@
     </div>
 <hr>
 </div>
-<form action="" class="card shadow-sm p-4">
-    <h1 class="h4 mb-3 text-center">Contáctanos</h1>
-<div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Email</label>
-  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="alguien@ejemplo.com">
+
+<div class="row g-4">
+    <div class="col-lg-6">
+        <form action="" class="card shadow-sm p-4">
+            <h1 class="h4 mb-3 text-center">Contáctanos</h1>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="alguien@ejemplo.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body p-0">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.8856658987!2d-103.3776129!3d20.6807232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428ae114f2aae47:0x42ebe4e90d43a930!2sC.+Reforma+1706,+Ladr%C3%B3n+de+Guevara,+Ladron+De+Guevara,+44600+Guadalajara,+Jal.!5e0!3m2!1ses!2smx!4v1706544000000!5m2!1ses!2smx"
+                    width="100%" 
+                    height="350" 
+                    style="border:0; border-radius: 10px;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div class="p-3">
+                    <h5 class="mb-2">Ubicación</h5>
+                    <p class="text-muted mb-0">
+                        <i class="bi bi-geo-alt-fill me-2"></i>
+                        C. Reforma 1706, Ladrón de Guevara, 44600 Guadalajara, Jal.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="mb-3">
-  <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
-  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-</div>
-</form>
 {% endblock %}

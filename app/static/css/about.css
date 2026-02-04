@@ -1,0 +1,289 @@
+/* Estilos para la página About */
+
+/* Animaciones y transiciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Contenedor principal */
+.container-lg {
+    max-width: 1400px;
+}
+
+/* Título principal */
+.text-center {
+    animation: fadeInUp 0.8s ease-out;
+    margin-bottom: 3rem !important;
+}
+
+.text-center h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.text-center h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+/* Tarjetas mejoradas */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out backwards;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+}
+
+.card:nth-child(1) { animation-delay: 0.2s; }
+.card:nth-child(2) { animation-delay: 0.4s; }
+.card:nth-child(3) { animation-delay: 0.6s; }
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.card-fixed {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Imágenes de las tarjetas */
+.card-img-fixed {
+    height: 450px;
+    object-fit: cover;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    display: block;
+}
+
+.card:hover .card-img-fixed {
+    transform: scale(1.1);
+    filter: brightness(0.7);
+}
+
+/* Cuerpo de la tarjeta - Overlay */
+.card-fixed .card-body {
+    padding: 2rem 2rem 2rem 2rem;
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-top: 3rem;
+}
+
+.card-fixed:hover .card-body {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-fixed .card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 0.8rem;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+.card-fixed:hover .card-title {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.card-fixed .card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.card-fixed:hover .card-title::after {
+    width: 60px;
+}
+
+.card-fixed .card-text {
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.card-fixed:hover .card-text {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Separador */
+hr {
+    border: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #667eea, transparent);
+    margin: 3rem 0;
+    opacity: 0.3;
+}
+
+/* Formulario de contacto */
+form.card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    animation: fadeInUp 1s ease-out backwards;
+    animation-delay: 0.8s;
+    border-radius: 20px;
+    padding: 2.5rem !important;
+}
+
+form.card h4 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+form.card .form-label {
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+form.card .form-control {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    color: white;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+form.card .form-control:focus {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.5);
+    color: white;
+    box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.1);
+}
+
+form.card .form-control::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Botón de envío (si se agrega) */
+.btn-submit {
+    background: white;
+    color: #667eea;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    color: #764ba2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .text-center h1 {
+        font-size: 2rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    form.card {
+        padding: 2rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .text-center h1 {
+        font-size: 1.75rem;
+    }
+    
+    .card-title {
+        font-size: 1.25rem;
+    }
+    
+    .card-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Efectos adicionales */
+.row.g-4 {
+    margin-bottom: 2rem;
+}
+
+/* Iconos decorativos */
+.card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #667eea, #764ba2, #667eea);
+    border-radius: 15px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 0.1;
+}
