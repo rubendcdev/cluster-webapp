@@ -6,7 +6,7 @@ from app.controllers import (
     auth_controller,
     admin_gallery_controller,
     asociaciones_controller,
-    cursos_controller
+    cursos_controller,
     success_cases_controller,
     admin_success_cases_controller,
     stay_application_controller,
