@@ -1,18 +1,100 @@
 {% extends "layout.html" %}
 {% block title %}Galería{% endblock %}
 
-{% block content %}
-<h1 class="text-center">Galería</h1>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+{% endblock %}
 
-{% if images %}
-    {% for img in images %}
-        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-            <img src="{{ url_for('static', filename='images/' + img.image) }}" width="200">
-            <h3>{{ img.title }}</h3>
-            <p>{{ img.description }}</p>
+{% block content %}
+<h1 class="text-center gallery-title">Galería CLUSTER</h1>
+
+<div class="row g-4 gallery-grid mb-4">
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery1.jpg') }}" class="card-img-top" alt="Galería 1">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
         </div>
-    {% endfor %}
-{% else %}
-    <p>No hay imágenes aún.</p>
-{% endif %}
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery2.jpg') }}" class="card-img-top" alt="Galería 2">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery3.jpg') }}" class="card-img-top" alt="Galería 3">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery2.jpg') }}" class="card-img-top" alt="Galería 4">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery3.jpg') }}" class="card-img-top" alt="Galería 5">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery1.jpg') }}" class="card-img-top" alt="Galería 6">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery3.jpg') }}" class="card-img-top" alt="Galería 7">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery1.jpg') }}" class="card-img-top" alt="Galería 8">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='images/gallery2.jpg') }}" class="card-img-top" alt="Galería 9">
+            <div class="card-body">
+                <h5 class="card-title">Proyecto Gallinaza-ITSZapopan</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Paginado -->
+<nav aria-label="Paginación de galería" class="gallery-pagination mt-4">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#">Anterior</a>
+        </li>
+        <li class="page-item active"><span class="page-link">1</span></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Siguiente</a>
+        </li>
+    </ul>
+</nav>
 {% endblock %}
