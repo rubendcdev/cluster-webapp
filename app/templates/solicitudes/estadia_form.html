@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Solicitud de Estancia{% endblock %}
+
+{% block content %}
+<h1>Solicitud de Estancia</h1>
+<form method="POST" enctype="multipart/form-data" class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label">Nombre</label>
+    <input class="form-control" name="nombre" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Apellido paterno</label>
+    <input class="form-control" name="apellido_paterno" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Apellido materno</label>
+    <input class="form-control" name="apellido_materno">
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Correo</label>
+    <input class="form-control" type="email" name="correo" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Teléfono</label>
+    <input class="form-control" name="telefono" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Estado</label>
+    <input class="form-control" name="estado" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">Institución</label>
+    <input class="form-control" name="institucion" required>
+  </div>
+  <div class="col-md-6">
+    <label class="form-label">CV (PDF, DOC)</label>
+    <input class="form-control" type="file" name="cv" accept=".pdf,.doc,.docx" required>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+  </div>
+</form>
+{% endblock %}

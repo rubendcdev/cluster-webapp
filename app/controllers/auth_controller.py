@@ -25,6 +25,11 @@ def login():
             return render_template("login.html"), 401
 
         login_user(user, remember=remember)
+        
+        # Redirección específica por rol
+        if user.role == "super_admin":
+            return redirect(url_for("super_admin.dashboard"))
+            
         next_url = request.args.get("next") or url_for("public.index")
         return redirect(next_url)
     return render_template("login.html", mode="login")
