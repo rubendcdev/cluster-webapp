@@ -5,6 +5,26 @@
     margin-bottom: 3rem !important;
 }
 
+/* Estilos del modal de la galería */
+.gallery-modal .modal-content {
+    border-radius: 18px;
+    border: none;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+}
+
+.gallery-modal .modal-header {
+    padding-bottom: 0.5rem;
+}
+
+.gallery-modal .modal-title {
+    font-weight: 600;
+}
+
+.gallery-modal .btn-close {
+    outline: none;
+    box-shadow: none;
+}
+
 .gallery-grid .card {
     border: none;
     border-radius: 15px;
