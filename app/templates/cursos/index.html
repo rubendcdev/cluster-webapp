@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Cursos</h1>
         {% if current_user.is_authenticated and current_user.role == 'admin' %}
-        <a href="{{ url_for('cursos.create') }}" class="btn btn-primary">
+        <a href="{{ url_for('cursos.create') }}" class="btn btn-info text-white">
             <i class="fas fa-plus me-2"></i>Nuevo Curso
         </a>
         {% endif %}
@@ -17,49 +17,56 @@
         <div class="col-md-6 col-lg-4">
             <div class="card h-100 shadow-sm">
                 {% if curso.url_imagen %}
-                    {% if curso.url_imagen.startswith('http') %}
-                        <img src="{{ curso.url_imagen }}" class="card-img-top" alt="{{ curso.nombre }}" style="height: 200px; object-fit: cover;">
-                    {% else %}
-                        <img src="{{ url_for('static', filename='uploads/cursos/' + curso.url_imagen) }}" class="card-img-top" alt="{{ curso.nombre }}" style="height: 200px; object-fit: cover;">
-                    {% endif %}
+                {% if curso.url_imagen.startswith('http') %}
+                <img src="{{ curso.url_imagen }}" class="card-img-top" alt="{{ curso.nombre }}"
+                    style="height: 200px; object-fit: cover;">
                 {% else %}
-                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                        <i class="fas fa-book fa-3x text-white"></i>
-                    </div>
+                <img src="{{ url_for('static', filename='uploads/cursos/' + curso.url_imagen) }}" class="card-img-top"
+                    alt="{{ curso.nombre }}" style="height: 200px; object-fit: cover;">
                 {% endif %}
-                
+                {% else %}
+                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center"
+                    style="height: 200px;">
+                    <i class="fas fa-book fa-3x text-white"></i>
+                </div>
+                {% endif %}
+
                 <div class="card-body">
                     <h5 class="card-title">{{ curso.nombre }}</h5>
                     <p class="card-text text-muted">
                         {% if curso.descripcion %}
-                            {{ curso.descripcion[:100] }}{% if curso.descripcion|length > 100 %}...{% endif %}
+                        {{ curso.descripcion[:100] }}{% if curso.descripcion|length > 100 %}...{% endif %}
                         {% else %}
-                            <em>Sin descripción</em>
+                        <em>Sin descripción</em>
                         {% endif %}
                     </p>
                 </div>
-                
+
                 <div class="card-footer bg-transparent">
                     <div class="d-flex justify-content-between align-items-center">
                         {% if curso.link %}
-                        <a href="{{ curso.link }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                        <a href="{{ curso.link }}" target="_blank" class="btn btn-sm btn-outline-info">
                             <i class="fas fa-external-link-alt me-1"></i>Ir al curso
                         </a>
                         {% else %}
                         <span></span>
                         {% endif %}
-                        
-                        <div class="btn-group" role="group">
-                            <a href="{{ url_for('cursos.show', id=curso.idCursos) }}" class="btn btn-sm btn-outline-info" title="Ver detalles">
-                                <i class="fas fa-eye"></i>
+
+                        <div class="d-flex gap-3">
+                            <a href="{{ url_for('cursos.show', id=curso.idCursos) }}"
+                                class="text-dark text-decoration-none fs-5" title="Ver detalles">
+                                <i class="bi bi-eye-fill"></i>
                             </a>
                             {% if current_user.is_authenticated and current_user.role == 'admin' %}
-                            <a href="{{ url_for('cursos.edit', id=curso.idCursos) }}" class="btn btn-sm btn-outline-warning">
-                                <i class="fas fa-edit"></i>
+                            <a href="{{ url_for('cursos.edit', id=curso.idCursos) }}"
+                                class="text-warning text-decoration-none fs-5" title="Editar">
+                                <i class="bi bi-pencil-fill"></i>
                             </a>
-                            <form action="{{ url_for('cursos.delete', id=curso.idCursos) }}" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro de eliminar este curso?')">
-                                    <i class="fas fa-trash"></i>
+                            <form action="{{ url_for('cursos.delete', id=curso.idCursos) }}" method="post"
+                                class="d-inline">
+                                <button type="submit" class="btn btn-link p-0 text-danger fs-5" title="Eliminar"
+                                    onclick="return confirm('¿Estás seguro de eliminar este curso?')">
+                                    <i class="bi bi-trash-fill"></i>
                                 </button>
                             </form>
                             {% endif %}
