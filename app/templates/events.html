@@ -7,7 +7,7 @@
 {% block content %}
 
 {% if current_user.is_authenticated and current_user.role == "admin" %}
-<button type="submit" class="btn btn-submit px-5" data-bs-toggle="modal" data-bs-target="#eventModal">Agregar</button>
+<button type="submit" class="btn btn-submit px-5" data-bs-toggle="modal" data-bs-target="#eventModal">Agregar evento</button>
 
 <div class="modal fade" id="eventModal" tabindex="-1">
     <div class="modal-dialog">
@@ -96,99 +96,101 @@
                             data-bs-target="#editEventModal{{ event.id }}">
                             Editar
                         </button>
-<!-- MODAL EDITAR -->
-<!-- ========================= -->
-<div class="modal fade" id="editEventModal{{ event.id }}" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
+                        <!-- MODAL EDITAR -->
+                        <!-- ========================= -->
+                        <div class="modal fade" id="editEventModal{{ event.id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title">Editar evento</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Editar evento</h5>
+                                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
 
-            <form method="POST" action="{{ url_for('events.update_event', event_id=event.id) }}">
-                <div class="modal-body">
+                                    <form method="POST"
+                                        action="{{ url_for('events.update_event', event_id=event.id) }}">
+                                        <div class="modal-body">
 
-                    <div class="mb-3">
-                        <label class="form-label">Título</label>
-                        <input type="text" name="title" class="form-control"
-                               value="{{ event.title }}" required>
-                    </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Título</label>
+                                                <input type="text" name="title" class="form-control"
+                                                    value="{{ event.title }}" required>
+                                            </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Descripción</label>
-                        <textarea name="description" class="form-control">{{ event.description }}</textarea>
-                    </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Descripción</label>
+                                                <textarea name="description"
+                                                    class="form-control">{{ event.description }}</textarea>
+                                            </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Lugar</label>
-                        <input type="text" name="place" class="form-control"
-                               value="{{ event.place }}" required>
-                    </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Lugar</label>
+                                                <input type="text" name="place" class="form-control"
+                                                    value="{{ event.place }}" required>
+                                            </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Fecha</label>
-                        <input type="date" name="date" class="form-control"
-                               value="{{ event.date.isoformat() }}" required>
-                    </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Fecha</label>
+                                                <input type="date" name="date" class="form-control"
+                                                    value="{{ event.date.isoformat() }}" required>
+                                            </div>
 
-                </div>
+                                        </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-                    <button class="btn btn-primary">
-                        Guardar cambios
-                    </button>
-                </div>
-            </form>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Cancelar
+                                            </button>
+                                            <button class="btn btn-primary">
+                                                Guardar cambios
+                                            </button>
+                                        </div>
+                                    </form>
 
-        </div>
-    </div>
-</div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Botón Eliminar -->
                         <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#deleteEventModal{{ event.id }}">
                             Eliminar
                         </button>
                         <!-- MODAL ELIMINAR -->
-<!-- ========================= -->
-<div class="modal fade" id="deleteEventModal{{ event.id }}" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
+                        <!-- ========================= -->
+                        <div class="modal fade" id="deleteEventModal{{ event.id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar evento</h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Eliminar evento</h5>
+                                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
 
-            <div class="modal-body">
-                ¿Seguro que deseas eliminar el evento
-                <strong>{{ event.title }}</strong>?
-            </div>
+                                    <div class="modal-body">
+                                        ¿Seguro que deseas eliminar el evento
+                                        <strong>{{ event.title }}</strong>?
+                                    </div>
 
-            <div class="modal-footer">
+                                    <div class="modal-footer">
 
-                <button class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cancelar
-                </button>
+                                        <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
 
-                <form method="POST"
-                      action="{{ url_for('events.delete_event', event_id=event.id) }}">
+                                        <form method="POST"
+                                            action="{{ url_for('events.delete_event', event_id=event.id) }}">
 
-                    <button class="btn btn-danger">
-                        Eliminar
-                    </button>
+                                            <button class="btn btn-danger">
+                                                Eliminar
+                                            </button>
 
-                </form>
+                                        </form>
 
-            </div>
+                                    </div>
 
-        </div>
-    </div>
-</div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     {% endif %}
