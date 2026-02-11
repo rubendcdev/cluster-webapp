@@ -1,4 +1,5 @@
 # app/controllers/public_controller.py
+from datetime import date
 from flask import Blueprint, render_template
 from app.services.gallery_service import get_all_images
 from app.services.event_service import get_all
@@ -20,5 +21,6 @@ def gallery():
 
 @public.route("/events")
 def events():
+    today = date.today().isoformat()
     events = get_all()
-    return render_template("events.html", events = events)
+    return render_template("events.html", events = events, today = today)
