@@ -34,8 +34,8 @@
 
                     {% if curso.link %}
                     <div class="mb-3">
-                        <a href="{{ curso.link }}" target="_blank" class="btn btn-primary btn-lg">
-                            <i class="fas fa-external-link-alt me-2"></i>Ir al Curso
+                        <a href="{{ curso.link }}" target="_blank" class="btn btn-info text-white btn-lg">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>Ir al Curso
                         </a>
                     </div>
                     {% endif %}
@@ -45,15 +45,16 @@
                             <!-- ID removed as requested -->
                         </div>
                         {% if current_user.is_authenticated and current_user.role == 'admin' %}
-                        <div class="btn-group" role="group">
-                            <a href="{{ url_for('cursos.edit', id=curso.idCursos) }}" class="btn btn-warning btn-sm">
-                                <i class="fas fa-edit me-1"></i>Editar
+                        <div class="d-flex gap-3">
+                            <a href="{{ url_for('cursos.edit', id=curso.idCursos) }}"
+                                class="text-warning text-decoration-none fs-5" title="Editar">
+                                <i class="bi bi-pencil-fill"></i>
                             </a>
                             <form action="{{ url_for('cursos.delete', id=curso.idCursos) }}" method="post"
                                 class="d-inline">
-                                <button type="submit" class="btn btn-danger btn-sm"
+                                <button type="submit" class="btn btn-link p-0 text-danger fs-5" title="Eliminar"
                                     onclick="return confirm('¿Estás seguro de eliminar este curso?')">
-                                    <i class="fas fa-trash me-1"></i>Eliminar
+                                    <i class="bi bi-trash-fill"></i>
                                 </button>
                             </form>
                         </div>
@@ -64,7 +65,7 @@
 
             <div class="mt-3">
                 <a href="{{ url_for('cursos.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left me-2"></i>Volver a Cursos
+                    <i class="bi bi-arrow-left me-2"></i>Volver a Cursos
                 </a>
             </div>
         </div>
