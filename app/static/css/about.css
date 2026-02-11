@@ -98,7 +98,7 @@
 /* Cuerpo de la tarjeta - Overlay */
 .card-fixed .card-body {
     padding: 2rem 2rem 2rem 2rem;
-    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(2,132,199,0.25) 100%);
     position: absolute;
     top: 0;
     left: 0;
@@ -143,7 +143,7 @@
     left: 0;
     width: 0;
     height: 3px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #27a2be 0%, #0b71dd 100%);
     border-radius: 2px;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
 }
@@ -177,8 +177,8 @@ hr {
 
 /* Formulario de contacto */
 form.card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: #e6f6ff;
+    color: #0f172a;
     animation: fadeInUp 1s ease-out backwards;
     animation-delay: 0.8s;
     border-radius: 20px;
@@ -186,41 +186,41 @@ form.card {
 }
 
 form.card h4 {
-    color: white;
+    color: #0f172a;
     font-weight: 600;
     margin-bottom: 2rem;
 }
 
 form.card .form-label {
-    color: rgba(255,255,255,0.9);
+    color: rgba(15, 23, 42, 0.85);
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
 form.card .form-control {
-    background: rgba(255,255,255,0.1);
-    border: 2px solid rgba(255,255,255,0.2);
-    color: white;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(2, 132, 199, 0.25);
+    color: #0f172a;
     border-radius: 10px;
     padding: 0.75rem 1rem;
     transition: all 0.3s ease;
 }
 
 form.card .form-control:focus {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.5);
-    color: white;
-    box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.1);
+    background: #ffffff;
+    border-color: rgba(2, 132, 199, 0.55);
+    color: #0f172a;
+    box-shadow: 0 0 0 0.25rem rgba(6, 182, 212, 0.18);
 }
 
 form.card .form-control::placeholder {
-    color: rgba(255,255,255,0.6);
+    color: rgba(15, 23, 42, 0.45);
 }
 
 /* Botón de envío (si se agrega) */
 .btn-submit {
-    background: white;
-    color: #667eea;
+    background: #0284c7;
+    color: #ffffff;
     border: none;
     padding: 0.75rem 2rem;
     border-radius: 50px;
@@ -232,7 +232,8 @@ form.card .form-control::placeholder {
 .btn-submit:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    color: #764ba2;
+    background: #0369a1;
+    color: #ffffff;
 }
 
 /* Responsive */
