@@ -68,6 +68,12 @@
                             Solicitudes</a>
                     </li>
                     {% endif %}
+                    {% if current_user.is_authenticated and current_user.role == "asociado" %}
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-warning {% if request.path == '/asociado/dashboard' %}active{% endif %}" href="/asociado/dashboard">Panel de
+                            Solicitudes</a>
+                    </li>
+                    {% endif %}
                 </ul>
 
 

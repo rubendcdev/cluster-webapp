@@ -18,10 +18,11 @@ def stay_application_form():
         telefono = request.form.get("telefono", "").strip()
         estado = request.form.get("estado", "").strip()
         institucion = request.form.get("institucion", "").strip()
+        carrera = request.form.get("carrera", "").strip()
         cv_file = request.files.get("cv")
 
         # Validaciones básicas
-        if not (nombre and apellido_paterno and correo and telefono and estado and institucion and cv_file and cv_file.filename):
+        if not (nombre and apellido_paterno and correo and telefono and estado and institucion and cv_file and cv_file.filename and carrera):
             flash("Todos los campos marcados y el CV son obligatorios.", "error")
             return render_template("solicitudes/estadia_form.html"), 400
 
@@ -40,6 +41,7 @@ def stay_application_form():
             telefono=telefono,
             estado=estado,
             institucion=institucion,
+            carrera=carrera,
             cv_path=f"/static/uploads/cv/{cv_name}",
         )
         flash("Tu solicitud fue registrada. ¡Gracias!", "success")
