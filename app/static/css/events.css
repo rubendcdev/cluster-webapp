@@ -1,0 +1,11 @@
+/* Botón de envío (si se agrega) */
+.btn-submit {
+    background: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}

@@ -5,4 +5,4 @@ class Event(db.Model):
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(200), nullable=True)
     place = db.Column(db.String(120), nullable=False)
-    date = db.Column(db.String(30), nullable=True)
+    date = db.Column(db.Date, nullable=False)
