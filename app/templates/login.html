@@ -182,15 +182,16 @@
   roleOptions.forEach(option => {
     option.addEventListener('click', () => {
       const role = option.getAttribute('data-role');
-      if (roleInput.value === role) return; // Evitar disparar si ya está seleccionado
+      if (roleInput.value === role) return;
 
       // Actualizar UI del selector
       roleOptions.forEach(opt => opt.classList.remove('active'));
       option.classList.add('active');
 
       // Animación de salida para todos los campos
-      userFields.classList.add('hidden');
-      asociadoFields.classList.add('hidden');
+      userFields.classList.add('hidden', 'no-flow');
+      asociadoFields.classList.add('hidden', 'no-flow');
+      // Los campos comunes NO usan no-flow para no dejar el espacio vacío (evita que el footer suba)
       commonFields.classList.add('hidden');
 
       setTimeout(() => {
@@ -220,9 +221,9 @@
         // Animación de entrada para los campos correspondientes
         setTimeout(() => {
           if (role === 'asociado') {
-            asociadoFields.classList.remove('hidden');
+            asociadoFields.classList.remove('hidden', 'no-flow');
           } else {
-            userFields.classList.remove('hidden');
+            userFields.classList.remove('hidden', 'no-flow');
           }
           commonFields.classList.remove('hidden');
         }, 50);
