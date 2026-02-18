@@ -10,5 +10,6 @@ class StayApplication(db.Model):
     telefono = db.Column(db.String(50), nullable=False)
     estado = db.Column(db.String(120), nullable=False)
     institucion = db.Column(db.String(180), nullable=False)
+    carrera = db.Column(db.String(180), nullable=False)
     cv_path = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

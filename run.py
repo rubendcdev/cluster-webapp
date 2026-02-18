@@ -2,6 +2,7 @@ from flask import Flask
 from app.config import Config
 from app.extensions import db, login_manager
 from app.controllers import (
+    asociado_controller,
     events_controller,
     public_controller,
     auth_controller,
@@ -44,6 +45,7 @@ app.register_blueprint(admin_success_cases_controller.admin_success)
 app.register_blueprint(stay_application_controller.stay_app)
 app.register_blueprint(admin_site_config_controller.admin_site_config)
 app.register_blueprint(super_admin_controller.super_admin)
+app.register_blueprint(asociado_controller.asociado)
 
 if __name__ == "__main__":
     with app.app_context():
