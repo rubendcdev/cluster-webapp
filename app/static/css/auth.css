@@ -19,7 +19,7 @@ body {
 .auth-card {
   background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 12px 35px rgba(0,0,0,.12);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, .12);
   overflow: hidden;
 }
 
@@ -122,4 +122,108 @@ body {
 
 .mode-register .panel-register {
   display: block;
+}
+
+/* --- New Animations & Modern Role Selector --- */
+
+/* Modern Role Selector (Slider) */
+.role-selector-container {
+  background: #f1f3f5;
+  border-radius: 50px;
+  position: relative;
+  display: flex;
+  padding: 4px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.role-option {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+  z-index: 2;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  user-select: none;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.role-option.active {
+  color: #fff;
+}
+
+.role-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: var(--primary);
+  border-radius: 40px;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 4px 10px rgba(36, 77, 143, 0.3);
+}
+
+/* Transitions for Field Groups */
+.field-group {
+  transition: all 0.4s ease-in-out;
+  opacity: 1;
+  transform: translateX(0);
+  position: relative;
+}
+
+.field-group.hidden {
+  opacity: 0 !important;
+  transform: translateX(-20px) !important;
+  pointer-events: none;
+}
+
+/* Specific class for when elements MUST be absolute to overlap */
+.field-group.hidden.no-flow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.field-group-container {
+  position: relative;
+  /* Remove min-height or set to something more realistic */
+  min-height: 120px;
+  transition: height 0.4s ease;
+  overflow: hidden;
+}
+
+/* Micro-animations */
+.form-underline .form-control {
+  transition: border-bottom-color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-primary-auth {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary-auth:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-hero h1,
+.auth-hero p {
+  animation: fadeInUp 0.8s ease backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
