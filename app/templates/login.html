@@ -64,50 +64,76 @@
             </div>
 
             <!-- REGISTER -->
-            <!-- REGISTER -->
             <div class="panel-register">
               <h1>Crear cuenta</h1>
 
               <form method="post" action="/register" class="form-underline">
 
-                <div class="row">
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Nombre</label>
-                    <input name="nombre" class="form-control" required>
+                <!-- Modern Role Selector -->
+                <div class="role-selector-container">
+                  <div class="role-slider" id="role_slider"></div>
+                  <div class="role-option active" data-role="user">Usuario Regular</div>
+                  <div class="role-option" data-role="asociado">Empresa / Asociado</div>
+                  <input type="hidden" name="role" id="role_input" value="user">
+                </div>
+
+                <div class="field-group-container">
+                  <!-- Campos de Usuario Regular -->
+                  <div id="user_fields" class="field-group">
+                    <div class="row">
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input name="nombre" class="form-control" id="reg_nombre" placeholder="Juan">
+                      </div>
+
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Apellido paterno</label>
+                        <input name="apellido_paterno" class="form-control" id="reg_paterno" placeholder="Pérez">
+                      </div>
+
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Apellido materno</label>
+                        <input name="apellido_materno" class="form-control" placeholder="García">
+                      </div>
+                    </div>
                   </div>
 
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Apellido paterno</label>
-                    <input name="apellido_paterno" class="form-control" required>
-                  </div>
-
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Apellido materno</label>
-                    <input name="apellido_materno" class="form-control">
+                  <!-- Campos de Asociado -->
+                  <div id="asociado_fields" class="field-group hidden" style="display: none;">
+                    <div class="mb-3">
+                      <label class="form-label">Nombre de la Empresa / Asociación</label>
+                      <input name="nombre_empresa" class="form-control" id="reg_empresa"
+                        placeholder="Nombre de tu organización">
+                    </div>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Correo electrónico</label>
-                    <input type="email" name="correo" class="form-control" required>
+                <!-- Campos Comunes con Animación -->
+                <div id="common_fields" class="field-group">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Correo electrónico</label>
+                      <input type="email" name="correo" class="form-control" required placeholder="correo@ejemplo.com">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Teléfono</label>
+                      <input type="tel" name="telefono" class="form-control" placeholder="123 456 7890 (Opcional)">
+                    </div>
                   </div>
 
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Teléfono</label>
-                    <input type="tel" name="telefono" class="form-control" placeholder="Opcional">
-                  </div>
-                </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label class="form-label">Contraseña</label>
+                      <input type="password" name="password" class="form-control" minlength="6" required
+                        placeholder="mín. 6 caracteres">
+                    </div>
 
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Contraseña</label>
-                    <input type="password" name="password" class="form-control" minlength="6" required>
-                  </div>
-
-                  <div class="col-md-6 mb-4">
-                    <label class="form-label">Confirmar contraseña</label>
-                    <input type="password" name="confirm_password" class="form-control" minlength="6" required>
+                    <div class="col-md-6 mb-4">
+                      <label class="form-label">Confirmar contraseña</label>
+                      <input type="password" name="confirm_password" class="form-control" minlength="6" required
+                        placeholder="repite tu contraseña">
+                    </div>
                   </div>
                 </div>
 
@@ -140,5 +166,74 @@
       container.classList.toggle('mode-register');
     });
   });
+
+  // Lógica para el selector de rol moderno con animaciones
+  const roleOptions = document.querySelectorAll('.role-option');
+  const roleSlider = document.getElementById('role_slider');
+  const roleInput = document.getElementById('role_input');
+  const userFields = document.getElementById('user_fields');
+  const asociadoFields = document.getElementById('asociado_fields');
+  const commonFields = document.getElementById('common_fields');
+
+  const inputNombre = document.getElementById('reg_nombre');
+  const inputPaterno = document.getElementById('reg_paterno');
+  const inputEmpresa = document.getElementById('reg_empresa');
+
+  roleOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      const role = option.getAttribute('data-role');
+      if (roleInput.value === role) return; // Evitar disparar si ya está seleccionado
+
+      // Actualizar UI del selector
+      roleOptions.forEach(opt => opt.classList.remove('active'));
+      option.classList.add('active');
+
+      // Animación de salida para todos los campos
+      userFields.classList.add('hidden');
+      asociadoFields.classList.add('hidden');
+      commonFields.classList.add('hidden');
+
+      setTimeout(() => {
+        // Mover el slider
+        if (role === 'asociado') {
+          roleSlider.style.transform = 'translateX(100%)';
+          roleInput.value = 'asociado';
+
+          userFields.style.display = 'none';
+          asociadoFields.style.display = 'block';
+
+          inputNombre.required = false;
+          inputPaterno.required = false;
+          inputEmpresa.required = true;
+        } else {
+          roleSlider.style.transform = 'translateX(0)';
+          roleInput.value = 'user';
+
+          asociadoFields.style.display = 'none';
+          userFields.style.display = 'block';
+
+          inputNombre.required = true;
+          inputPaterno.required = true;
+          inputEmpresa.required = false;
+        }
+
+        // Animación de entrada para los campos correspondientes
+        setTimeout(() => {
+          if (role === 'asociado') {
+            asociadoFields.classList.remove('hidden');
+          } else {
+            userFields.classList.remove('hidden');
+          }
+          commonFields.classList.remove('hidden');
+        }, 50);
+
+      }, 400);
+    });
+  });
+
+  // Inicialización
+  inputNombre.required = true;
+  inputPaterno.required = true;
+  inputEmpresa.required = false;
 </script>
 {% endblock %}

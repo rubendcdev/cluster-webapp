@@ -29,6 +29,9 @@ def login():
         # Redirección específica por rol
         if user.role == "super_admin":
             return redirect(url_for("super_admin.dashboard"))
+        elif user.role == "asociado":
+            flash(f"Bienvenido asociado: {user.nombre_empresa}", "success")
+            return redirect(url_for("public.index")) # Or specific associate dashboard if exists
             
         next_url = request.args.get("next") or url_for("public.index")
         return redirect(next_url)
@@ -37,21 +40,30 @@ def login():
 @auth.route("/register", methods=["GET","POST"])
 def register():
     if request.method == "POST":
+        role = request.form.get("role", "user")
         nombre = request.form.get("nombre", "").strip()
         apellido_paterno = request.form.get("apellido_paterno", "").strip()
         apellido_materno = request.form.get("apellido_materno", "").strip()
+        nombre_empresa = request.form.get("nombre_empresa", "").strip()
         telefono = request.form.get("telefono", "").strip()
         correo = request.form.get("correo", "").strip().lower()
         password = request.form.get("password", "")
         confirm = request.form.get("confirm_password", "")
 
-        if not nombre or not apellido_paterno or not correo or not password or not confirm:
-            flash("Nombre, apellido paterno, correo y contraseña son obligatorios.", "error")
+        # Validaciones comunes
+        if not correo or not password or not confirm:
+            flash("Correo y contraseña son obligatorios.", "error")
             return render_template("login.html", mode="register"), 400
 
-        if len(nombre) < 2:
-            flash("El nombre debe tener al menos 2 caracteres.", "error")
-            return render_template("login.html", mode="register"), 400
+        # Validaciones específicas por rol
+        if role == "asociado":
+            if not nombre_empresa:
+                flash("El nombre de la empresa es obligatorio para asociados.", "error")
+                return render_template("login.html", mode="register"), 400
+        else:
+            if not nombre or not apellido_paterno:
+                flash("Nombre y apellido paterno son obligatorios.", "error")
+                return render_template("login.html", mode="register"), 400
 
         if len(password) < 6:
             flash("La contraseña debe tener al menos 6 caracteres.", "error")
@@ -67,12 +79,14 @@ def register():
 
         try:
             register_user(
-                nombre=nombre,
-                apellido_paterno=apellido_paterno,
-                apellido_materno=apellido_materno,
+                nombre=nombre if role == "user" else None,
+                apellido_paterno=apellido_paterno if role == "user" else None,
+                apellido_materno=apellido_materno if role == "user" else None,
+                nombre_empresa=nombre_empresa if role == "asociado" else None,
                 correo=correo,
                 telefono=telefono,
                 password=password,
+                role=role
             )
         except IntegrityError:
             flash("El correo ya existe.", "error")
