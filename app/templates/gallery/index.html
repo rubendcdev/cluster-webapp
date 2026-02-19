@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% block title %}Galería{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center gallery-title">Galería CLUSTER</h1>
+
+{% if current_user.is_authenticated and current_user.role == 'admin' %}
+<div class="d-flex justify-content-end mb-3">
+    <a href="{{ url_for('admin_gallery.admin_gallery_new') }}" class="btn btn-primary">
+        <i class="bi bi-plus-lg me-1"></i>Agregar imagen
+    </a>
+</div>
+{% endif %}
+
+{% if images %}
+<div class="row g-4 gallery-grid mb-4">
+    {% for img in images %}
+    <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm h-100">
+            {% if img.image.startswith('http') %}
+            <img src="{{ img.image }}"
+                 class="card-img-top"
+                 alt="{{ img.title }}"
+                 data-bs-toggle="modal" data-bs-target="#galleryModal"
+                 data-title="{{ img.title }}"
+                 data-image="{{ img.image }}"
+                 data-description="{{ img.description or '' }}">
+            {% else %}
+            <img src="{{ url_for('static', filename='uploads/gallery/' + img.image) }}"
+                 class="card-img-top"
+                 alt="{{ img.title }}"
+                 data-bs-toggle="modal" data-bs-target="#galleryModal"
+                 data-title="{{ img.title }}"
+                 data-image="{{ url_for('static', filename='uploads/gallery/' + img.image) }}"
+                 data-description="{{ img.description or '' }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ img.title }}</h5>
+                {% if img.description %}
+                <p class="card-text">{{ img.description }}</p>
+                {% endif %}
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <a href="{{ url_for('admin_gallery.admin_gallery_edit', image_id=img.id) }}" class="btn btn-sm btn-outline-light">
+                        <i class="bi bi-pencil me-1"></i>Editar
+                    </a>
+                    <form action="{{ url_for('admin_gallery.admin_gallery_delete', image_id=img.id) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                            onclick="return confirm('¿Seguro que deseas eliminar esta imagen?');">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% if pagination and pagination.pages > 1 %}
+    <nav aria-label="Paginación de galería" class="gallery-pagination mt-4">
+        <ul class="pagination justify-content-center">
+            {# Flecha anterior: solo después de la primera página #}
+            {% if pagination.page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('public.gallery', page=pagination.page - 1) }}" aria-label="Anterior">
+                    &laquo;
+                </a>
+            </li>
+            {% endif %}
+
+            {# Números de página #}
+            {% for p in range(1, pagination.pages + 1) %}
+            <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                <a class="page-link" href="{{ url_for('public.gallery', page=p) }}">{{ p }}</a>
+            </li>
+            {% endfor %}
+
+            {# Flecha siguiente: solo si no estamos en la última página #}
+            {% if pagination.page < pagination.pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('public.gallery', page=pagination.page + 1) }}" aria-label="Siguiente">
+                    &raquo;
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+{% else %}
+<p class="text-center text-muted">Aún no hay imágenes registradas en la galería.</p>
+{% endif %}
+
+<!-- Modal para imágenes de la galería -->
+<div class="modal fade gallery-modal" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="galleryModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <img id="galleryModalImage" src="" alt="" class="img-fluid rounded mb-3">
+                <p id="galleryModalDescription" class="text-muted mb-0"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var galleryModal = document.getElementById('galleryModal');
+    if (!galleryModal) return;
+
+    galleryModal.addEventListener('show.bs.modal', function (event) {
+        var trigger = event.relatedTarget;
+        if (!trigger) return;
+
+        var title = trigger.getAttribute('data-title') || '';
+        var image = trigger.getAttribute('data-image') || '';
+        var description = trigger.getAttribute('data-description') || '';
+
+        var titleEl = document.getElementById('galleryModalLabel');
+        var imageEl = document.getElementById('galleryModalImage');
+        var descEl = document.getElementById('galleryModalDescription');
+
+        if (titleEl) titleEl.textContent = title;
+        if (imageEl) {
+            imageEl.src = image;
+            imageEl.alt = title;
+        }
+        if (descEl) {
+            if (description && description.trim() !== '') {
+                descEl.textContent = description;
+                descEl.classList.remove('d-none');
+            } else {
+                descEl.textContent = '';
+                descEl.classList.add('d-none');
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
