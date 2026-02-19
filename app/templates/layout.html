@@ -30,45 +30,63 @@
 
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">¿Quiénes somos?</a>
+                        <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">¿Quiénes
+                            somos?</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint in ['public.gallery', 'admin_gallery.admin_gallery_new', 'admin_gallery.admin_gallery_edit'] %}active{% endif %}"
-                           href="/gallery">Galería</a>
+                        <a class="nav-link {% if request.path == '/gallery' %}active{% endif %}"
+                            href="/gallery">Galería</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/casos-de-exito' %}active{% endif %}" href="/casos-de-exito">Casos de éxito</a>
+                        <a class="nav-link {% if request.path == '/casos-de-exito' %}active{% endif %}"
+                            href="/casos-de-exito">Casos de éxito</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/asociaciones/' %}active{% endif %}" href="{{ url_for('asociaciones.index') }}">Asociados</a>
+                        <a class="nav-link {% if request.path == '/asociaciones/' %}active{% endif %}"
+                            href="{{ url_for('asociaciones.index') }}">Asociados</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/cursos/' %}active{% endif %}" href="{{ url_for('cursos.index') }}">Cursos</a>
+                        <a class="nav-link {% if request.path == '/cursos/' %}active{% endif %}"
+                            href="{{ url_for('cursos.index') }}">Cursos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/events' %}active{% endif %}" href="/events">Eventos</a>
+                        <a class="nav-link {% if request.path == '/events' %}active{% endif %}"
+                            href="/events">Eventos</a>
                     </li>
 
                     {% if current_user.is_authenticated and current_user.role == "admin" %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/admin/casos-de-exito' %}active{% endif %}" href="/admin/casos-de-exito">CasosAdmin</a>
+                        <a class="nav-link {% if request.path == '/admin/gallery' %}active{% endif %}"
+                            href="/admin/gallery">Admin Galeria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/admin/site-config' %}active{% endif %}" href="/admin/site-config">Configuración</a>
+                        <a class="nav-link {% if request.path == '/admin/casos-de-exito' %}active{% endif %}"
+                            href="/admin/casos-de-exito">CasosAdmin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/admin/site-config' %}active{% endif %}"
+                            href="/admin/site-config">Configuración</a>
                     </li>
                     {% endif %}
 
                     {% if current_user.is_authenticated and current_user.role == "super_admin" %}
                     <li class="nav-item">
-                        <a class="nav-link fw-bold text-warning {% if request.path == '/super-admin/solicitudes' %}active{% endif %}" href="/super-admin/solicitudes">Panel de
+                        <a class="nav-link fw-bold text-warning {% if request.path == '/super-admin/solicitudes' %}active{% endif %}"
+                            href="/super-admin/solicitudes">Panel de
                             Solicitudes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-warning {% if request.path == '/super-admin/administradores' %}active{% endif %}"
+                            href="/super-admin/administradores">Panel de
+                            Administradores</a>
                     </li>
                     {% endif %}
                     {% if current_user.is_authenticated and current_user.role == "asociado" %}
                     <li class="nav-item">
-                        <a class="nav-link fw-bold text-warning {% if request.path == '/asociado/dashboard' %}active{% endif %}" href="/asociado/dashboard">Panel de
+                        <a class="nav-link fw-bold text-warning {% if request.path == '/asociado/dashboard' %}active{% endif %}"
+                            href="/asociado/dashboard">Panel de
                             Solicitudes</a>
                     </li>
                     {% endif %}
@@ -77,19 +95,41 @@
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     {% if current_user.is_authenticated %}
+
+                    {% if current_user.role != "asociado" %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/profile' %}active{% endif %}" href="/profile">{{ current_user.nombre }} {{ current_user.apellido_paterno }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/logout' %}active{% endif %}" href="/logout">Salir</a>
+                        <a class="nav-link {% if request.path == '/profile' %}active{% endif %}" href="/profile">
+                            {{ current_user.nombre }} {{ current_user.apellido_paterno }}
+                        </a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/login' %}active{% endif %}" href="/login">Iniciar sesión</a>
+                        <a class="nav-link {% if request.path == '/profile' %}active{% endif %}" href="/profile">
+                            {{ current_user.nombre_empresa }}
+                        </a>
                     </li>
+                    {% endif %}
+
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/register' %}active{% endif %}" href="/register">Registro</a>
+                        <a class="nav-link {% if request.path == '/logout' %}active{% endif %}" href="/logout">
+                            Salir
+                        </a>
                     </li>
+
+                    {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/login' %}active{% endif %}" href="/login">
+                            Iniciar sesión
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/register' %}active{% endif %}" href="/register">
+                            Registro
+                        </a>
+                    </li>
+
                     {% endif %}
                 </ul>
             </div>
@@ -108,14 +148,15 @@
             <div class="footer-triangular-decoration"></div>
         </div>
 
-        
+
         <div class="container container-lg position-relative">
             <div class="row">
                 <!-- Columna izquierda: Logo y Contacto -->
                 <div class="col-md-4">
                     <div class="mb-3">
                         <div class="d-flex align-items-center mb-2">
-                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-info me-3 footer-logo-circle">
+                            <div
+                                class="d-flex align-items-center justify-content-center rounded-circle bg-info me-3 footer-logo-circle">
                                 <i class="bi bi-cpu text-white fs-4"></i>
                             </div>
                             <h3 class="mb-0 fw-bold text-white">CIAT</h3>
@@ -138,29 +179,30 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Columna central: Enlaces de Navegación -->
                 <div class="col-md-4">
                     <ul class="list-unstyled mb-3">
-                        <li class="mb-2"><a href="/about" class="text-light text-decoration-none">Sobre Nosotros</a></li>
+                        <li class="mb-2"><a href="/about" class="text-light text-decoration-none">Sobre Nosotros</a>
+                        </li>
                         <li class="mb-2"><a href="#" class="text-light text-decoration-none">Servicios</a></li>
                         <li class="mb-2"><a href="/gallery" class="text-light text-decoration-none">Proyectos</a></li>
                         <li class="mb-2"><a href="#" class="text-light text-decoration-none">Contacto</a></li>
                     </ul>
                     <hr class="my-2 footer-divider">
                     <p class="text-light mb-0 small">
-                        &copy; 2026 CLUSTER, Inc. • 
-                        <a href="#" class="text-light text-decoration-none">Privacy</a> • 
+                        &copy; 2026 CLUSTER, Inc. •
+                        <a href="#" class="text-light text-decoration-none">Privacy</a> •
                         <a href="#" class="text-light text-decoration-none">Terms</a>
                     </p>
                 </div>
-                
+
                 <!-- Columna derecha: Llamada a la Acción y Redes Sociales -->
                 <div class="col-md-4 text-end">
                     <div class="mb-3">
                         <h5 class="mb-2 text-white">¿Interesado en impulsar tu proyecto tecnológico?</h5>
                         <button class="btn btn-info px-4 py-2">
-                            Contáctanos 
+                            Contáctanos
                             <i class="bi bi-arrow-right ms-2"></i>
                         </button>
                     </div>
