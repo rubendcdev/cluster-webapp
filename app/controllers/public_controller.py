@@ -1,7 +1,7 @@
 # app/controllers/public_controller.py
 from datetime import date
-from flask import Blueprint, render_template
-from app.services.gallery_service import get_all_images
+from flask import Blueprint, render_template, request
+from app.services.gallery_service import get_paginated_images
 from app.services.event_service import get_all
 
 public = Blueprint("public", __name__)
@@ -16,8 +16,10 @@ def about():
 
 @public.route("/gallery")
 def gallery():
-    images = get_all_images()
-    return render_template("gallery.html", images=images)
+    page = request.args.get("page", 1, type=int)
+    pagination = get_paginated_images(page=page, per_page=9)
+    images = pagination.items
+    return render_template("gallery/index.html", images=images, pagination=pagination)
 
 @public.route("/events")
 def events():

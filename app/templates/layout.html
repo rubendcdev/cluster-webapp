@@ -34,7 +34,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/gallery' %}active{% endif %}" href="/gallery">Galería</a>
+                        <a class="nav-link {% if request.endpoint in ['public.gallery', 'admin_gallery.admin_gallery_new', 'admin_gallery.admin_gallery_edit'] %}active{% endif %}"
+                           href="/gallery">Galería</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/casos-de-exito' %}active{% endif %}" href="/casos-de-exito">Casos de éxito</a>
@@ -51,9 +52,6 @@
                     </li>
 
                     {% if current_user.is_authenticated and current_user.role == "admin" %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/admin/gallery' %}active{% endif %}" href="/admin/gallery">Admin Galeria</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/admin/casos-de-exito' %}active{% endif %}" href="/admin/casos-de-exito">CasosAdmin</a>
                     </li>

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Editar imagen de galería{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header text-white" style="background-color: #2c3e50;">
+                <h4 class="mb-0">
+                    <i class="bi bi-pencil-square me-2"></i>Editar imagen: {{ image.title }}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Título *</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ image.title }}" required maxlength="100">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" maxlength="500">{{ image.description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Imagen actual</label>
+                        {% if image.image %}
+                        <div class="mb-2">
+                            <img src="{{ url_for('static', filename='uploads/gallery/' + image.image) }}" alt="{{ image.title }}" class="img-fluid rounded" style="max-height: 200px; object-fit: cover;">
+                        </div>
+                        {% else %}
+                        <p class="text-muted mb-2">Sin imagen almacenada.</p>
+                        {% endif %}
+                        <label for="image" class="form-label">Cambiar imagen (opcional)</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        <div class="form-text">Si seleccionas una nueva imagen, reemplazará a la actual.</div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('public.gallery') }}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Volver a galería
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save me-1"></i>Guardar cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
