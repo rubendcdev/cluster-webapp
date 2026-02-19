@@ -1,0 +1,183 @@
+{% extends "layout.html" %}
+{% block title %}Administradores{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Gestión de Administradores</h2>
+
+    <!-- Botón -->
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#crearAdminModal">
+        Agregar Administrador
+    </button>
+
+    <!-- Lista -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if admins %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for admin in admins %}
+                    <tr>
+                        <td>
+                            {{ admin.nombre }} {{ admin.apellido_paterno }} {{ admin.apellido_materno }}
+                        </td>
+                        <td>{{ admin.correo }}</td>
+                        <td>{{ admin.telefono }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('super_admin.eliminar_admin', user_id=admin.id) }}"
+                                style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    Eliminar
+                                </button>
+                            </form>
+                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#editarAdminModal{{ admin.id }}">
+                                    Editar
+                                </button>
+                        </td>
+                    </tr>
+                    <!-- Modal Editar -->
+                    <div class="modal fade" id="editarAdminModal{{ admin.id }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form method="POST"
+                                    action="{{ url_for('super_admin.editar_admin', user_id=admin.id) }}">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Editar Administrador</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre</label>
+                                            <input type="text" name="nombre" class="form-control"
+                                                value="{{ admin.nombre }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Apellido Paterno</label>
+                                            <input type="text" name="apellido_paterno" class="form-control"
+                                                value="{{ admin.apellido_paterno }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Apellido Materno</label>
+                                            <input type="text" name="apellido_materno" class="form-control"
+                                                value="{{ admin.apellido_materno }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Correo</label>
+                                            <input type="email" name="correo" class="form-control"
+                                                value="{{ admin.correo }}" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Teléfono</label>
+                                            <input type="text" name="telefono" class="form-control"
+                                                value="{{ admin.telefono }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">
+                                                Nueva contraseña (opcional)
+                                            </label>
+                                            <input type="password" name="password" class="form-control"
+                                                placeholder="Dejar vacío para no cambiar">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Cancelar
+                                        </button>
+                                        <button type="submit" class="btn btn-warning">
+                                            Actualizar
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No hay administradores registrados.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="crearAdminModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="{{ url_for('super_admin.crear_admin') }}">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo Administrador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Apellido Paterno</label>
+                        <input type="text" name="apellido_paterno" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Apellido Materno</label>
+                        <input type="text" name="apellido_materno" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="email" name="correo" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Crear Administrador
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
