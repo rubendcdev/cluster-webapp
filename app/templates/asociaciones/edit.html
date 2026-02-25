@@ -47,15 +47,10 @@
                             </div>
                             <div class="mt-2">
                                 {% if asociacion.url_imagen %}
-                                {% if asociacion.url_imagen.startswith('http') %}
-                                <img id="imagePreview" src="{{ asociacion.url_imagen }}" alt="{{ asociacion.nombre }}"
-                                    class="img-thumbnail" style="max-height: 200px; max-width: 100%;">
-                                {% else %}
                                 <img id="imagePreview"
                                     src="{{ url_for('static', filename='uploads/asociaciones/' + asociacion.url_imagen) }}"
                                     alt="{{ asociacion.nombre }}" class="img-thumbnail"
                                     style="max-height: 200px; max-width: 100%;">
-                                {% endif %}
                                 {% else %}
                                 <img id="imagePreview" src="" alt="Preview" class="img-thumbnail"
                                     style="max-height: 200px; max-width: 100%; display: none;">
@@ -82,7 +77,7 @@
                         <a href="{{ url_for('asociaciones.index') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-2"></i>Cancelar
                         </a>
-                        <button type="submit" class="btn btn-info text-white">
+                        <button type="submit" class="btn btn-admin-primary">
                             <i class="bi bi-save me-2"></i>Actualizar Asociación
                         </button>
                     </div>

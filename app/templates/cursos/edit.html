@@ -39,15 +39,10 @@
                             </div>
                             <div class="mt-2">
                                 {% if curso.url_imagen %}
-                                {% if curso.url_imagen.startswith('http') %}
-                                <img id="imagePreview" src="{{ curso.url_imagen }}" alt="{{ curso.nombre }}"
-                                    class="img-thumbnail" style="max-height: 200px; max-width: 100%;">
-                                {% else %}
                                 <img id="imagePreview"
                                     src="{{ url_for('static', filename='uploads/cursos/' + curso.url_imagen) }}"
                                     alt="{{ curso.nombre }}" class="img-thumbnail"
                                     style="max-height: 200px; max-width: 100%;">
-                                {% endif %}
                                 {% else %}
                                 <img id="imagePreview" src="" alt="Preview" class="img-thumbnail"
                                     style="max-height: 200px; max-width: 100%; display: none;">
@@ -74,7 +69,7 @@
                         <a href="{{ url_for('cursos.index') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-2"></i>Cancelar
                         </a>
-                        <button type="submit" class="btn btn-info text-white">
+                        <button type="submit" class="btn btn-admin-primary">
                             <i class="bi bi-save me-2"></i>Actualizar Curso
                         </button>
                     </div>

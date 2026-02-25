@@ -2,159 +2,298 @@
 {% block title %}Asociaciones{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Asociaciones</h1>
+{% macro render_asociacion_card(asociacion, extra_classes='', placeholder_icon='fa-building') %}
+<div class="col asociacion-item" data-nombre="{{ asociacion.nombre|lower }}">
+    <div class="card h-100 asociacion-card shadow-sm border-0 {{ extra_classes }}">
+        {% set img_url = url_for('static', filename='uploads/asociaciones/' + asociacion.url_imagen) if
+        asociacion.url_imagen else '' %}
+        <div class="asociacion-img-wrapper cursor-pointer btn-quick-view" data-bs-toggle="modal"
+            data-bs-target="#asociacionModal" data-nombre="{{ asociacion.nombre }}"
+            data-descripcion="{{ asociacion.descripcion or 'Sin descripción disponible' }}" data-imagen="{{ img_url }}"
+            data-link="{{ asociacion.link or '' }}" title="Haga clic para ver detalles">
+            {% if img_url %}
+            <img src="{{ img_url }}" alt="{{ asociacion.nombre }}" class="img-fluid">
+            {% else %}
+            <i class="fas {{ placeholder_icon }} fa-4x text-muted opacity-25"></i>
+            {% endif %}
+        </div>
+
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-truncate" title="{{ asociacion.nombre }}">{{ asociacion.nombre }}</h5>
+            <p class="card-text mb-4">
+                {% if asociacion.descripcion %}
+                {{ asociacion.descripcion }}
+                {% else %}
+                <span class="text-muted small italic">Sin descripción disponible</span>
+                {% endif %}
+            </p>
+
+            <div class="d-flex justify-content-between align-items-center mt-auto">
+                {% if asociacion.link %}
+                <a href="{{ asociacion.link }}" target="_blank"
+                    class="btn btn-sm btn-visitar-premium rounded-pill px-4">
+                    <i class="bi bi-box-arrow-up-right me-1"></i>Visitar
+                </a>
+                {% else %}
+                <span class="text-muted small">Sin enlace</span>
+                {% endif %}
+
+                {% if current_user.is_authenticated and current_user.role == "admin" %}
+                <div class="d-flex gap-2 asociacion-admin-controls">
+                    <a href="{{ url_for('asociaciones.edit', id=asociacion.idAsociaciones) }}"
+                        class="btn btn-link text-warning p-0" title="Editar">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                    <form action="{{ url_for('asociaciones.delete', id=asociacion.idAsociaciones) }}" method="post"
+                        class="d-inline">
+                        <button type="submit" class="btn btn-link text-danger p-0" title="Eliminar"
+                            onclick="return confirm('¿Estás seguro de eliminar esta asociación?')">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+<div class="container-fluid py-4">
+    <!-- Header Premium -->
+    <div class="text-center mb-5 animate-fade-in">
+        <h1 class="display-5 fw-bold mb-3"
+            style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            Nuestros Asociados</h1>
+        <p class="text-muted mx-auto" style="max-width: 600px;">Conecta con las organizaciones y entidades académicas
+            que forman parte de nuestro ecosistema.</p>
+
         {% if current_user.is_authenticated and current_user.role == "admin" %}
-        <a href="{{ url_for('asociaciones.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-2"></i>Nueva Asociación
-        </a>
+        <div class="mt-4">
+            <a href="{{ url_for('asociaciones.create') }}" class="btn btn-admin-primary px-4 py-2">
+                <i class="bi bi-plus-lg me-2"></i>Nueva Asociación
+            </a>
+        </div>
         {% endif %}
+    </div>
+
+    <!-- Buscador Real-time -->
+    <div class="search-container animate-fade-in" style="animation-delay: 0.2s;">
+        <div class="search-input-wrapper">
+            <i class="bi bi-search"></i>
+            <input type="text" id="asociacionesSearch" placeholder="Buscar por nombre de organización..."
+                autocomplete="off">
+        </div>
     </div>
 
     <!-- Sección Empresariales -->
-    <h3 class="border-bottom pb-2 mb-3 text-info"><i class="bi bi-building me-2"></i>Asociados Empresariales</h3>
-    <div class="row mb-5">
-        {% for asociacion in empresariales %}
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm">
-                {% if asociacion.url_imagen %}
-                {% if asociacion.url_imagen.startswith('http') %}
-                <img src="{{ asociacion.url_imagen }}" class="card-img-top" alt="{{ asociacion.nombre }}"
-                    style="height: 200px; object-fit: cover;">
-                {% else %}
-                <img src="{{ url_for('static', filename='uploads/asociaciones/' + asociacion.url_imagen) }}"
-                    class="card-img-top" alt="{{ asociacion.nombre }}" style="height: 200px; object-fit: cover;">
-                {% endif %}
-                {% else %}
-                <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                    style="height: 200px;">
-                    <i class="fas fa-building fa-3x text-muted"></i>
-                </div>
-                {% endif %}
-
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ asociacion.nombre }}</h5>
-                    <p class="card-text flex-grow-1">
-                        {% if asociacion.descripcion %}
-                        {{ asociacion.descripcion[:100] }}{% if asociacion.descripcion|length > 100 %}...{% endif %}
-                        {% else %}
-                        <span class="text-muted">Sin descripción</span>
-                        {% endif %}
-                    </p>
-
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        {% if asociacion.link %}
-                        <a href="{{ asociacion.link }}" target="_blank" class="btn btn-sm btn-outline-info">
-                            <i class="bi bi-box-arrow-up-right me-1"></i>Visitar
-                        </a>
-                        {% else %}
-                        <span class="text-muted small">Sin enlace</span>
-                        {% endif %}
-
-                        {% if current_user.is_authenticated and current_user.role == "admin" %}
-                        <div class="d-flex gap-3">
-                            <a href="{{ url_for('asociaciones.edit', id=asociacion.idAsociaciones) }}"
-                                class="text-warning text-decoration-none fs-5" title="Editar">
-                                <i class="bi bi-pencil-fill"></i>
-                            </a>
-                            <form action="{{ url_for('asociaciones.delete', id=asociacion.idAsociaciones) }}"
-                                method="post" class="d-inline">
-                                <button type="submit" class="btn btn-link p-0 text-danger fs-5" title="Eliminar"
-                                    onclick="return confirm('¿Estás seguro de eliminar esta asociación?')">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </form>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+    <div id="section-empresarial" class="mb-5 asociacion-section">
+        <h3 class="d-flex align-items-center mb-4 text-info fw-bold">
+            <span class="bg-info bg-opacity-10 p-2 rounded-3 me-3"><i class="bi bi-building"></i></span>
+            Empresariales
+        </h3>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="empresarial-grid">
+            {% for asociacion in empresariales %}
+            {{ render_asociacion_card(asociacion) }}
+            {% endfor %}
         </div>
-        {% else %}
-        <div class="col-12">
-            <p class="text-muted fst-italic">No hay asociados empresariales registrados.</p>
+        <div class="empty-results text-center py-5 d-none">
+            <i class="bi bi-search-heart display-1 text-muted opacity-25"></i>
+            <p class="mt-3 text-muted">No encontramos asociaciones empresariales con ese nombre.</p>
         </div>
-        {% endfor %}
+        <!-- Paginación Empresariales -->
+        <div id="empresarialPagination" class="pagination-container mt-4 animate-fade-in"></div>
     </div>
 
     <!-- Sección Académicas -->
-    <h3 class="border-bottom pb-2 mb-3 text-dark"><i class="bi bi-bank me-2"></i>Asociados Académicos</h3>
-    <div class="row mb-4">
-        {% for asociacion in academicas %}
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card h-100 shadow-sm border-start border-dark border-4">
-                {% if asociacion.url_imagen %}
-                {% if asociacion.url_imagen.startswith('http') %}
-                <img src="{{ asociacion.url_imagen }}" class="card-img-top" alt="{{ asociacion.nombre }}"
-                    style="height: 200px; object-fit: cover;">
-                {% else %}
-                <img src="{{ url_for('static', filename='uploads/asociaciones/' + asociacion.url_imagen) }}"
-                    class="card-img-top" alt="{{ asociacion.nombre }}" style="height: 200px; object-fit: cover;">
-                {% endif %}
-                {% else %}
-                <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                    style="height: 200px;">
-                    <i class="fas fa-university fa-3x text-muted"></i>
-                </div>
-                {% endif %}
+    <div id="section-academica" class="mb-5 asociacion-section">
+        <h3 class="d-flex align-items-center mb-4 text-dark fw-bold">
+            <span class="bg-dark bg-opacity-10 p-2 rounded-3 me-3"><i class="bi bi-bank"></i></span>
+            Académicas
+        </h3>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="academica-grid">
+            {% for asociacion in academicas %}
+            {{ render_asociacion_card(asociacion, 'border-start border-info border-4', 'fa-university') }}
+            {% endfor %}
+        </div>
+        <div class="empty-results text-center py-5 d-none">
+            <i class="bi bi-search-heart display-1 text-muted opacity-25"></i>
+            <p class="mt-3 text-muted">No encontramos asociaciones académicas con ese nombre.</p>
+        </div>
+    </div>
+</div>
 
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ asociacion.nombre }}</h5>
-                    <p class="card-text flex-grow-1">
-                        {% if asociacion.descripcion %}
-                        {{ asociacion.descripcion[:100] }}{% if asociacion.descripcion|length > 100 %}...{% endif %}
-                        {% else %}
-                        <span class="text-muted">Sin descripción</span>
-                        {% endif %}
-                    </p>
-
-                    <div class="d-flex justify-content-between align-items-center mt-auto">
-                        {% if asociacion.link %}
-                        <a href="{{ asociacion.link }}" target="_blank" class="btn btn-sm btn-outline-info">
-                            <i class="bi bi-box-arrow-up-right me-1"></i>Visitar
-                        </a>
-                        {% else %}
-                        <span class="text-muted small">Sin enlace</span>
-                        {% endif %}
-
-                        {% if current_user.is_authenticated and current_user.role == "admin" %}
-                        <div class="d-flex gap-3">
-                            <a href="{{ url_for('asociaciones.edit', id=asociacion.idAsociaciones) }}"
-                                class="text-warning text-decoration-none fs-5" title="Editar">
-                                <i class="bi bi-pencil-fill"></i>
+<!-- Modal Premium Detalle -->
+<div class="modal fade" id="asociacionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 25px; overflow: hidden;">
+            <div class="modal-header border-0 bg-light p-4">
+                <h4 class="modal-title fw-bold" id="modalNombre" style="color: #2c3e50;">Nombre de la Empresa</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div
+                        class="col-md-5 bg-white d-flex align-items-center justify-content-center p-5 border-end border-light">
+                        <img id="modalImagen" src="" alt="Logo" class="img-fluid"
+                            style="max-height: 250px; object-fit: contain;">
+                    </div>
+                    <div class="col-md-7 p-5">
+                        <h6 class="text-uppercase text-primary fw-bold mb-3"
+                            style="letter-spacing: 1px; font-size: 0.8rem;">Descripción Completa</h6>
+                        <p id="modalDescripcion" class="text-muted mb-5" style="line-height: 1.8; font-size: 1rem;">
+                            Cargando descripción...
+                        </p>
+                        <div id="modalLinkContainer">
+                            <a id="modalLink" href="#" target="_blank"
+                                class="btn btn-admin-primary rounded-pill px-5 py-2 fw-bold">
+                                <i class="bi bi-box-arrow-up-right me-2"></i>Visitar Sitio Web Oficial
                             </a>
-                            <form action="{{ url_for('asociaciones.delete', id=asociacion.idAsociaciones) }}"
-                                method="post" class="d-inline">
-                                <button type="submit" class="btn btn-link p-0 text-danger fs-5" title="Eliminar"
-                                    onclick="return confirm('¿Estás seguro de eliminar esta asociación?')">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </form>
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class="col-12">
-            <p class="text-muted fst-italic">No hay asociados académicos registrados.</p>
-        </div>
-        {% endfor %}
     </div>
-
-    {% if not empresariales and not academicas %}
-    <div class="text-center py-5">
-        <i class="fas fa-layer-group fa-4x text-muted mb-3"></i>
-        <h4 class="text-muted">No hay asociaciones registradas</h4>
-        <p class="text-muted">Comienza agregando una nueva asociación.</p>
-        {% if current_user.is_authenticated and current_user.role == "admin" %}
-        <a href="{{ url_for('asociaciones.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-2"></i>Crear Primera Asociación
-        </a>
-        {% endif %}
-    </div>
-    {% endif %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Configuración Paginación ---
+        const ITEMS_PER_PAGE = 8;
+        let currentEmpPage = 1;
+
+        // --- Elementos ---
+        const searchInput = document.getElementById('asociacionesSearch');
+        const sections = document.querySelectorAll('.asociacion-section');
+        const empresarialSection = document.getElementById('section-empresarial');
+        const empresarialGrid = document.getElementById('empresarial-grid');
+        const paginationContainer = document.getElementById('empresarialPagination');
+
+        function updateEmpPagination() {
+            if (!empresarialGrid || !paginationContainer) return;
+
+            const visibleItems = Array.from(empresarialGrid.querySelectorAll('.asociacion-item'))
+                .filter(item => !item.getAttribute('data-filtered'));
+
+            const totalItems = visibleItems.length;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+            // Control de rango de página
+            if (currentEmpPage > totalPages && totalPages > 0) currentEmpPage = totalPages;
+            if (currentEmpPage < 1) currentEmpPage = 1;
+
+            // Actualizar visibilidad de ítems en la sección empresarial
+            visibleItems.forEach((item, index) => {
+                const start = (currentEmpPage - 1) * ITEMS_PER_PAGE;
+                const end = start + ITEMS_PER_PAGE;
+                if (index >= start && index < end) {
+                    item.classList.remove('d-none');
+                    item.style.animation = 'fadeInUp 0.4s ease forwards';
+                } else {
+                    item.classList.add('d-none');
+                }
+            });
+
+            // Generar puntos de paginación
+            paginationContainer.innerHTML = '';
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `page-dot ${i === currentEmpPage ? 'active' : ''}`;
+                    dot.setAttribute('title', `Página ${i}`);
+                    dot.addEventListener('click', () => {
+                        currentEmpPage = i;
+                        updateEmpPagination();
+                        const headerOffset = 100;
+                        const elementPosition = empresarialSection.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    });
+                    paginationContainer.appendChild(dot);
+                }
+            }
+        }
+
+        // --- Buscador Real-time ---
+        if (searchInput) {
+            searchInput.addEventListener('input', function (e) {
+                const term = e.target.value.toLowerCase().trim();
+                currentEmpPage = 1; // Reset a página 1 al buscar
+
+                sections.forEach(section => {
+                    const sectionItems = section.querySelectorAll('.asociacion-item');
+                    let visibleCount = 0;
+
+                    sectionItems.forEach(item => {
+                        const nombre = item.getAttribute('data-nombre') || '';
+                        if (nombre.includes(term)) {
+                            item.removeAttribute('data-filtered');
+                            // Para secciones que NO son empresariales, mostramos todo sin paginar
+                            if (section.id !== 'section-empresarial') {
+                                item.classList.remove('d-none');
+                                item.style.animation = 'fadeInUp 0.4s ease forwards';
+                            }
+                            visibleCount++;
+                        } else {
+                            item.setAttribute('data-filtered', 'true');
+                            item.classList.add('d-none');
+                        }
+                    });
+
+                    const emptyMsg = section.querySelector('.empty-results');
+                    const grid = section.querySelector('.row');
+
+                    if (visibleCount === 0) {
+                        if (emptyMsg) emptyMsg.classList.remove('d-none');
+                        if (grid) grid.classList.add('d-none');
+                    } else {
+                        if (emptyMsg) emptyMsg.classList.add('d-none');
+                        if (grid) grid.classList.remove('d-none');
+                    }
+                });
+
+                updateEmpPagination(); // Re-calcular paginación de empresas
+            });
+        }
+
+        // Inicializar paginación al cargar
+        updateEmpPagination();
+
+        // --- Modal Logic ---
+        const asociacionModal = document.getElementById('asociacionModal');
+        if (asociacionModal) {
+            asociacionModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+
+                // Extraer info de los data attributes
+                const nombre = button.getAttribute('data-nombre');
+                const descripcion = button.getAttribute('data-descripcion');
+                const imagen = button.getAttribute('data-imagen');
+                const link = button.getAttribute('data-link');
+
+                // Actualizar contenido del modal
+                document.getElementById('modalNombre').textContent = nombre;
+                document.getElementById('modalDescripcion').textContent = descripcion;
+
+                const modalImg = document.getElementById('modalImagen');
+                if (imagen) {
+                    modalImg.src = imagen;
+                    modalImg.parentElement.classList.remove('d-none');
+                } else {
+                    modalImg.parentElement.classList.add('d-none');
+                }
+
+                const modalLink = document.getElementById('modalLink');
+                const linkContainer = document.getElementById('modalLinkContainer');
+                if (link) {
+                    modalLink.href = link;
+                    linkContainer.classList.remove('d-none');
+                } else {
+                    linkContainer.classList.add('d-none');
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}
