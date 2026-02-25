@@ -137,7 +137,7 @@
     </nav>
 
 
-    <main class="container container-lg my-4 flex-grow-1">
+    <main class="{% block main_class %}container container-lg my-4 flex-grow-1{% endblock %}">
         {% block content %}{% endblock %}
     </main>
 

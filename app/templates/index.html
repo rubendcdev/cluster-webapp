@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 {% block title %}Inicio{% endblock %}
 
-{% block content %}
-<h1 class="text-center">Cluster Integradores de Alta Tecnología</h1>
+{% block main_class %}flex-grow-1 p-0 m-0 d-flex flex-column{% endblock %}
 
-<div id="carouselExampleIndicators" class="carousel slide">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+{% block content %}
+
+<div id="carouselExampleIndicators" class="carousel slide carousel-full-main" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false" data-bs-touch="false">
+  <div class="carousel-hero-overlay"></div>
+  <div class="carousel-hero-caption">
+    <h1 class="carousel-hero-title">Cluster Integradores de Alta Tecnología</h1>
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -21,17 +21,123 @@
       <img src="{{ url_for('static', filename='images/slide3.jpg') }}" class="d-block w-100" alt="...">
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
 
-<p>
-    Esta es la página principal de nuestra aplicación web desarrollada para Cluster
-</p>
+<section class="home-cards-section">
+  <div class="container py-5">
+    <div class="home-cards-header">
+      <h2 class="home-cards-title">Cursos</h2>
+    </div>
+
+    <div class="home-cards-carousel mt-4">
+      <div class="home-cards-track">
+        <div class="home-cards-group">
+          <div class="home-card-item">
+            <div class="card home-card">
+              <img src="{{ url_for('static', filename='images/slide1.jpg') }}" class="card-img-top home-card-img" alt="Imagen representativa de Card 1">
+              <div class="card-body">
+                <h5 class="card-title">Curso 1</h5>
+                <p class="card-text">Contenido de ejemplo.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-card-item">
+            <div class="card home-card">
+              <img src="{{ url_for('static', filename='images/slide2.jpg') }}" class="card-img-top home-card-img" alt="Imagen representativa de Card 2">
+              <div class="card-body">
+                <h5 class="card-title">Curso 2</h5>
+                <p class="card-text">Contenido de ejemplo.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-card-item">
+            <div class="card home-card">
+              <img src="{{ url_for('static', filename='images/slide3.jpg') }}" class="card-img-top home-card-img" alt="Imagen representativa de Card 3">
+              <div class="card-body">
+                <h5 class="card-title">Curso 3</h5>
+                <p class="card-text">Contenido de ejemplo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-cards-group" aria-hidden="true">
+          <div class="home-card-item">
+            <div class="card home-card">
+              <img src="{{ url_for('static', filename='images/slide1.jpg') }}" class="card-img-top home-card-img" alt="">
+              <div class="card-body">
+                <h5 class="card-title">Curso 1</h5>
+                <p class="card-text">Contenido de ejemplo.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-card-item">
+            <div class="card home-card">
+              <img src="{{ url_for('static', filename='images/slide2.jpg') }}" class="card-img-top home-card-img" alt="">
+              <div class="card-body">
+                <h5 class="card-title">Curso 2</h5>
+                <p class="card-text">Contenido de ejemplo.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-card-item">
+            <div class="card home-card">
+              <img src="{{ url_for('static', filename='images/slide3.jpg') }}" class="card-img-top home-card-img" alt="">
+              <div class="card-body">
+                <h5 class="card-title">Curso 3</h5>
+                <p class="card-text">Contenido de ejemplo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-services-band">
+  <div class="container pt-3 pb-5">
+    <div class="text-center mb-3">
+      <h2 class="fw-bold text-white m-0">Áreas de Servicios Tecnológicos</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-12 col-lg-4">
+        <div class="home-services-panel">
+          <ul class="home-services-list mb-0">
+            <li>IoT agrícola</li>
+            <li>Soluciones HW y SW</li>
+            <li>Tecnologías educativas</li>
+            <li>Seguridad informática y digital</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="home-services-panel">
+          <ul class="home-services-list mb-0">
+            <li>Soluciones integrales con TIC's</li>
+            <li>Consultoría tecnológica y de comercio electrónico</li>
+            <li>Transferencias de tecnología</li>
+            <li>Diseño e impresión</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="home-services-panel">
+          <ul class="home-services-list mb-0">
+            <li>Servicios de mantenimiento de hardware y software</li>
+            <li>Desarrollo e implementación de SW Administrativo (ERP y CRM)</li>
+            <li>Inteligencia de mercado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
