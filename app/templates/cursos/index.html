@@ -2,93 +2,266 @@
 {% block title %}Cursos{% endblock %}
 
 {% block content %}
+{% macro render_curso_card(curso) %}
+<div class="col curso-item" data-nombre="{{ curso.nombre|lower }}">
+    <div class="card h-100 asociacion-card shadow-sm border-0">
+        {% set img_url = url_for('static', filename='uploads/cursos/' + curso.url_imagen) if curso.url_imagen else '' %}
+        <div class="asociacion-img-wrapper cursor-pointer btn-quick-view" data-bs-toggle="modal"
+            data-bs-target="#cursoModal" data-nombre="{{ curso.nombre }}"
+            data-descripcion="{{ curso.descripcion or 'Sin descripción disponible' }}" data-imagen="{{ img_url }}"
+            data-link="{{ curso.link or '' }}" title="Haga clic para ver detalles">
+            {% if img_url %}
+            <img src="{{ img_url }}" alt="{{ curso.nombre }}" class="img-fluid"
+                style="object-fit: cover; width: 100%; height: 100%;">
+            {% else %}
+            <i class="fas fa-book fa-4x text-muted opacity-25"></i>
+            {% endif %}
+        </div>
+
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-truncate" title="{{ curso.nombre }}">{{ curso.nombre }}</h5>
+            <p class="card-text mb-4">
+                {% if curso.descripcion %}
+                {{ curso.descripcion }}
+                {% else %}
+                <span class="text-muted small italic">Sin descripción disponible</span>
+                {% endif %}
+            </p>
+
+            <div class="d-flex justify-content-between align-items-center mt-auto">
+                {% if curso.link %}
+                <a href="{{ curso.link }}" target="_blank" class="btn btn-sm btn-visitar-premium rounded-pill px-4">
+                    <i class="bi bi-box-arrow-up-right me-1"></i>Visitar
+                </a>
+                {% else %}
+                <span class="text-muted small">Sin enlace</span>
+                {% endif %}
+
+                <div class="d-flex gap-2 asociacion-admin-controls">
+                    <a href="{{ url_for('cursos.show', id=curso.idCursos) }}" class="btn btn-link text-info p-0"
+                        title="Ver detalles">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+                    {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                    <a href="{{ url_for('cursos.edit', id=curso.idCursos) }}" class="btn btn-link text-warning p-0"
+                        title="Editar">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                    <form action="{{ url_for('cursos.delete', id=curso.idCursos) }}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-link text-danger p-0" title="Eliminar"
+                            onclick="return confirm('¿Estás seguro de eliminar este curso?')">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
 <div class="container-fluid py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Cursos</h1>
-        {% if current_user.is_authenticated and current_user.role == 'admin' %}
-        <a href="{{ url_for('cursos.create') }}" class="btn btn-info text-white">
-            <i class="fas fa-plus me-2"></i>Nuevo Curso
-        </a>
+    <!-- Header Premium -->
+    <div class="text-center mb-5 animate-fade-in">
+        <h1 class="display-5 fw-bold mb-3"
+            style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            Nuestros Cursos</h1>
+        <p class="text-muted mx-auto" style="max-width: 600px;">Explora nuestra oferta educativa y profesional diseñada
+            para impulsar tu crecimiento.</p>
+
+        {% if current_user.is_authenticated and current_user.role == "admin" %}
+        <div class="mt-4">
+            <a href="{{ url_for('cursos.create') }}" class="btn btn-admin-primary px-4 py-2">
+                <i class="bi bi-plus-lg me-2"></i>Nuevo Curso
+            </a>
+        </div>
         {% endif %}
     </div>
 
-    <div class="row g-4">
-        {% for curso in cursos %}
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm">
-                {% if curso.url_imagen %}
-                {% if curso.url_imagen.startswith('http') %}
-                <img src="{{ curso.url_imagen }}" class="card-img-top" alt="{{ curso.nombre }}"
-                    style="height: 200px; object-fit: cover;">
-                {% else %}
-                <img src="{{ url_for('static', filename='uploads/cursos/' + curso.url_imagen) }}" class="card-img-top"
-                    alt="{{ curso.nombre }}" style="height: 200px; object-fit: cover;">
-                {% endif %}
-                {% else %}
-                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center"
-                    style="height: 200px;">
-                    <i class="fas fa-book fa-3x text-white"></i>
-                </div>
-                {% endif %}
+    <!-- Buscador Real-time -->
+    <div class="search-container animate-fade-in" style="animation-delay: 0.2s;">
+        <div class="search-input-wrapper">
+            <i class="bi bi-search"></i>
+            <input type="text" id="cursosSearch" placeholder="Buscar por nombre de curso..." autocomplete="off">
+        </div>
+    </div>
 
-                <div class="card-body">
-                    <h5 class="card-title">{{ curso.nombre }}</h5>
-                    <p class="card-text text-muted">
-                        {% if curso.descripcion %}
-                        {{ curso.descripcion[:100] }}{% if curso.descripcion|length > 100 %}...{% endif %}
-                        {% else %}
-                        <em>Sin descripción</em>
-                        {% endif %}
-                    </p>
-                </div>
+    <!-- Sección de Cursos -->
+    <div id="section-cursos" class="mb-5 asociacion-section">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4" id="cursos-grid">
+            {% for curso in cursos %}
+            {{ render_curso_card(curso) }}
+            {% endfor %}
+        </div>
 
-                <div class="card-footer bg-transparent">
-                    <div class="d-flex justify-content-between align-items-center">
-                        {% if curso.link %}
-                        <a href="{{ curso.link }}" target="_blank" class="btn btn-sm btn-outline-info">
-                            <i class="fas fa-external-link-alt me-1"></i>Ir al curso
-                        </a>
-                        {% else %}
-                        <span></span>
-                        {% endif %}
+        <div id="empty-cursos" class="empty-results text-center py-5 d-none">
+            <i class="bi bi-search-heart display-1 text-muted opacity-25"></i>
+            <p class="mt-3 text-muted">No encontramos cursos con ese nombre.</p>
+        </div>
 
-                        <div class="d-flex gap-3">
-                            <a href="{{ url_for('cursos.show', id=curso.idCursos) }}"
-                                class="text-dark text-decoration-none fs-5" title="Ver detalles">
-                                <i class="bi bi-eye-fill"></i>
+        {% if not cursos %}
+        <div class="text-center py-5">
+            <i class="bi bi-book display-1 text-muted opacity-25"></i>
+            <h4 class="mt-3 text-muted">No hay cursos registrados</h4>
+            {% if current_user.is_authenticated and current_user.role == 'admin' %}
+            <a href="{{ url_for('cursos.create') }}" class="btn btn-admin-primary mt-3">
+                <i class="bi bi-plus-lg me-2"></i>Crear Primer Curso
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Paginación Cursos -->
+        <div id="cursosPagination" class="pagination-container mt-4 animate-fade-in"></div>
+    </div>
+</div>
+
+<!-- Modal Premium Detalle Curso -->
+<div class="modal fade" id="cursoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 25px; overflow: hidden;">
+            <div class="modal-header border-0 bg-light p-4">
+                <h4 class="modal-title fw-bold" id="modalNombre" style="color: #2c3e50;">Nombre del Curso</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="row g-0">
+                    <div
+                        class="col-md-5 bg-white d-flex align-items-center justify-content-center p-5 border-end border-light">
+                        <img id="modalImagen" src="" alt="Curso" class="img-fluid"
+                            style="max-height: 250px; object-fit: contain;">
+                    </div>
+                    <div class="col-md-7 p-5">
+                        <h6 class="text-uppercase text-primary fw-bold mb-3"
+                            style="letter-spacing: 1px; font-size: 0.8rem;">Detalles del Curso</h6>
+                        <p id="modalDescripcion" class="text-muted mb-5" style="line-height: 1.8; font-size: 1rem;">
+                            Cargando descripción...
+                        </p>
+                        <div id="modalLinkContainer">
+                            <a id="modalLink" href="#" target="_blank"
+                                class="btn btn-admin-primary rounded-pill px-5 py-2 fw-bold">
+                                <i class="bi bi-box-arrow-up-right me-2"></i>Ir al Curso
                             </a>
-                            {% if current_user.is_authenticated and current_user.role == 'admin' %}
-                            <a href="{{ url_for('cursos.edit', id=curso.idCursos) }}"
-                                class="text-warning text-decoration-none fs-5" title="Editar">
-                                <i class="bi bi-pencil-fill"></i>
-                            </a>
-                            <form action="{{ url_for('cursos.delete', id=curso.idCursos) }}" method="post"
-                                class="d-inline">
-                                <button type="submit" class="btn btn-link p-0 text-danger fs-5" title="Eliminar"
-                                    onclick="return confirm('¿Estás seguro de eliminar este curso?')">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </form>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
     </div>
-
-    {% if not cursos %}
-    <div class="text-center py-5">
-        <i class="fas fa-book fa-4x text-muted mb-3"></i>
-        <h4 class="text-muted">No hay cursos registrados</h4>
-        {% if current_user.is_authenticated and current_user.role == 'admin' %}
-        <p class="text-muted mb-3">Comienza agregando tu primer curso</p>
-        <a href="{{ url_for('cursos.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus me-2"></i>Crear Primer Curso
-        </a>
-        {% endif %}
-    </div>
-    {% endif %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- Configuración Paginación ---
+        const ITEMS_PER_PAGE = 8;
+        let currentPage = 1;
+
+        // --- Elementos ---
+        const searchInput = document.getElementById('cursosSearch');
+        const coursesGrid = document.getElementById('cursos-grid');
+        const paginationContainer = document.getElementById('cursosPagination');
+        const emptyMsg = document.getElementById('empty-cursos');
+
+        function updatePagination() {
+            if (!coursesGrid || !paginationContainer) return;
+
+            const visibleItems = Array.from(coursesGrid.querySelectorAll('.curso-item'))
+                .filter(item => !item.getAttribute('data-filtered'));
+
+            const totalItems = visibleItems.length;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+            if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            visibleItems.forEach((item, index) => {
+                const start = (currentPage - 1) * ITEMS_PER_PAGE;
+                const end = start + ITEMS_PER_PAGE;
+                if (index >= start && index < end) {
+                    item.classList.remove('d-none');
+                    item.style.animation = 'fadeInUp 0.4s ease forwards';
+                } else {
+                    item.classList.add('d-none');
+                }
+            });
+
+            paginationContainer.innerHTML = '';
+            if (totalPages > 1) {
+                for (let i = 1; i <= totalPages; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = `page-dot ${i === currentPage ? 'active' : ''}`;
+                    dot.addEventListener('click', () => {
+                        currentPage = i;
+                        updatePagination();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                    paginationContainer.appendChild(dot);
+                }
+            }
+
+            if (totalItems === 0 && searchInput.value.trim() !== "") {
+                emptyMsg.classList.remove('d-none');
+                coursesGrid.classList.add('d-none');
+            } else {
+                emptyMsg.classList.add('d-none');
+                coursesGrid.classList.remove('d-none');
+            }
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', function (e) {
+                const term = e.target.value.toLowerCase().trim();
+                const items = coursesGrid.querySelectorAll('.curso-item');
+
+                items.forEach(item => {
+                    const nombre = item.getAttribute('data-nombre') || '';
+                    if (nombre.includes(term)) {
+                        item.removeAttribute('data-filtered');
+                    } else {
+                        item.setAttribute('data-filtered', 'true');
+                        item.classList.add('d-none');
+                    }
+                });
+
+                currentPage = 1;
+                updatePagination();
+            });
+        }
+
+        updatePagination();
+
+        // Modal Logic
+        const cursoModal = document.getElementById('cursoModal');
+        if (cursoModal) {
+            cursoModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const nombre = button.getAttribute('data-nombre');
+                const descripcion = button.getAttribute('data-descripcion');
+                const imagen = button.getAttribute('data-imagen');
+                const link = button.getAttribute('data-link');
+
+                document.getElementById('modalNombre').textContent = nombre;
+                document.getElementById('modalDescripcion').textContent = descripcion;
+
+                const modalImg = document.getElementById('modalImagen');
+                if (imagen) {
+                    modalImg.src = imagen;
+                    modalImg.parentElement.classList.remove('d-none');
+                } else {
+                    modalImg.parentElement.classList.add('d-none');
+                }
+
+                const modalLink = document.getElementById('modalLink');
+                const linkContainer = document.getElementById('modalLinkContainer');
+                if (link) {
+                    modalLink.href = link;
+                    linkContainer.classList.remove('d-none');
+                } else {
+                    linkContainer.classList.add('d-none');
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

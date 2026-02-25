@@ -7,13 +7,8 @@
         <div class="col-lg-8">
             <div class="card shadow-lg">
                 {% if curso.url_imagen %}
-                {% if curso.url_imagen.startswith('http') %}
-                <img src="{{ curso.url_imagen }}" class="card-img-top" alt="{{ curso.nombre }}"
-                    style="height: 300px; object-fit: cover;">
-                {% else %}
                 <img src="{{ url_for('static', filename='uploads/cursos/' + curso.url_imagen) }}" class="card-img-top"
                     alt="{{ curso.nombre }}" style="height: 300px; object-fit: cover;">
-                {% endif %}
                 {% else %}
                 <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center"
                     style="height: 300px;">
@@ -34,7 +29,7 @@
 
                     {% if curso.link %}
                     <div class="mb-3">
-                        <a href="{{ curso.link }}" target="_blank" class="btn btn-info text-white btn-lg">
+                        <a href="{{ curso.link }}" target="_blank" class="btn btn-admin-primary btn-lg">
                             <i class="bi bi-box-arrow-up-right me-2"></i>Ir al Curso
                         </a>
                     </div>
