@@ -58,10 +58,6 @@
 
                     {% if current_user.is_authenticated and current_user.role == "admin" %}
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/admin/gallery' %}active{% endif %}"
-                            href="/admin/gallery">Admin Galeria</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {% if request.path == '/admin/casos-de-exito' %}active{% endif %}"
                             href="/admin/casos-de-exito">CasosAdmin</a>
                     </li>
