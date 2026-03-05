@@ -34,6 +34,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Blueprints
 app.register_blueprint(public_controller.public)
 app.register_blueprint(events_controller.events)
 app.register_blueprint(auth_controller.auth)
@@ -50,4 +51,9 @@ app.register_blueprint(asociado_controller.asociado)
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+
+    app.run(
+        host="0.0.0.0",   # 👈 CLAVE para Docker
+        port=5000,
+        debug=True
+    )
