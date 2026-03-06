@@ -14,10 +14,10 @@ services:
     image: mysql:8.0
     container_name: cluster_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: cluster_db
-      MYSQL_USER: ann
-      MYSQL_PASSWORD: ann123
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - cluster_mysql_data:/var/lib/mysql
     healthcheck:
