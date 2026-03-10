@@ -93,10 +93,18 @@ Esto iniciará:
 - Acceder a la app: **http://localhost:5000**
 - Ver logs: `docker compose logs -f`
 - Parar servicios: `docker compose down`
-- Entrar a la base de datos (terminal):
+- Entrar a la base de datos (terminal interactiva):
   ```bash
   docker exec -it cluster_mysql mysql -u root -p
   ```
+
+### 3️⃣ Conectarse desde un gestor externo (DBeaver, DataGrip, HeidiSQL)
+Gracias al puerto expuesto en el `docker-compose.yml`, puedes conectar tu programa gestor de base de datos favorito directamente al contenedor de MySQL. Usa la siguiente configuración de conexión en tu programa:
+- **Host**: `localhost` o `127.0.0.1`
+- **Port**: `3306`
+- **Username**: El valor que pusiste en tu `.env` (ej. `root`)
+- **Password**: El valor que pusiste en tu `.env` (ej. `tu_password_aqui`)
+- **Database**: `cluster_db`
 
 ---
 
